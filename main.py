@@ -1,33 +1,26 @@
 import os
 
 from dotenv import load_dotenv
-from telegram import Update
-from telegram.ext import (
-    Application,
-    CommandHandler,
-    ContextTypes,
-)
+from telegram.ext import Application, CommandHandler
+
+from app.database.db import initialize_database
+from app.handlers.start import start
+from app.handlers.help import help_command
 
 load_dotenv()
 
 TOKEN = os.getenv("BOT_TOKEN")
 
 
-async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text(
-        "👋 Hello Arshu!\nWelcome to WorkMate AI!"
-    )
-
-
 def main():
-    if TOKEN is None:
-        raise RuntimeError("BOT_TOKEN not loaded!")
+    initialize_database()
 
     app = Application.builder().token(TOKEN).build()
 
     app.add_handler(CommandHandler("start", start))
+    app.add_handler(CommandHandler("help", help_command))
 
-    print("Bot started...")
+    print("🤖 WorkMate AI is online...")
 
     app.run_polling()
 
