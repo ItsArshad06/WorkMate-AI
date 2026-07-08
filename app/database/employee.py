@@ -48,10 +48,26 @@ def employee_exists(employee_id):
     )
 
     row = cursor.fetchone()
-    print("DEBUG:", employee_id, row)
-
-    exists = row is not None
 
     conn.close()
 
-    return exists
+    return row is not None
+
+
+def get_all_employees():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        """
+        SELECT full_name, employee_id, department
+        FROM employees
+        ORDER BY full_name
+        """
+    )
+
+    employees = cursor.fetchall()
+
+    conn.close()
+
+    return employees

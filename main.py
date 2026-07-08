@@ -8,6 +8,7 @@ from app.handlers.start import start
 from app.handlers.help import help_command
 from app.handlers.register import register_handler
 from app.handlers.profile import profile_handler
+from app.handlers.list_employees import list_employees_handler
 
 load_dotenv()
 
@@ -26,6 +27,7 @@ def main():
     app.add_handler(CommandHandler("help", help_command))
     app.add_handler(register_handler)
     app.add_handler(profile_handler)
+    app.add_handler(list_employees_handler)
 
     print("🤖 WorkMate AI is online...")
 
