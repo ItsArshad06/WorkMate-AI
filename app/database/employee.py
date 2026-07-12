@@ -28,7 +28,7 @@ def get_employee(employee_id):
         FROM employees
         WHERE employee_id = ?
         """,
-        (employee_id,),
+        (employee_id.upper(),),
     )
 
     employee = cursor.fetchone()
@@ -43,8 +43,12 @@ def employee_exists(employee_id):
     cursor = conn.cursor()
 
     cursor.execute(
-        "SELECT 1 FROM employees WHERE employee_id = ?",
-        (employee_id,),
+        """
+        SELECT 1
+        FROM employees
+        WHERE employee_id = ?
+        """,
+        (employee_id.upper(),),
     )
 
     row = cursor.fetchone()
@@ -71,3 +75,41 @@ def get_all_employees():
     conn.close()
 
     return employees
+
+
+def get_employee_count():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "SELECT COUNT(*) FROM employees"
+    )
+
+    count = cursor.fetchone()[0]
+
+    conn.close()
+
+    return count
+
+
+def get_employee_details(employee_id):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        """
+        SELECT full_name,
+               employee_id,
+               department,
+               phone
+        FROM employees
+        WHERE employee_id = ?
+        """,
+        (employee_id.upper(),),
+    )
+
+    employee = cursor.fetchone()
+
+    conn.close()
+
+    return employee
