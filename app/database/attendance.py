@@ -12,7 +12,7 @@ def check_in(employee_id):
 
     cursor.execute(
         """
-        SELECT id
+        SELECT check_out
         FROM attendance
         WHERE employee_id = ?
         AND date = ?
@@ -20,9 +20,11 @@ def check_in(employee_id):
         (employee_id, today),
     )
 
-    if cursor.fetchone():
+    row = cursor.fetchone()
+
+    if row:
         conn.close()
-        return False
+        return "ALREADY_CHECKED_IN"
 
     cursor.execute(
         """
@@ -36,7 +38,7 @@ def check_in(employee_id):
     conn.commit()
     conn.close()
 
-    return True
+    return "SUCCESS"
 
 
 def check_out(employee_id):
@@ -48,21 +50,38 @@ def check_out(employee_id):
 
     cursor.execute(
         """
+        SELECT check_out
+        FROM attendance
+        WHERE employee_id = ?
+        AND date = ?
+        """,
+        (employee_id, today),
+    )
+
+    row = cursor.fetchone()
+
+    if row is None:
+        conn.close()
+        return "NOT_CHECKED_IN"
+
+    if row["check_out"] is not None:
+        conn.close()
+        return "ALREADY_CHECKED_OUT"
+
+    cursor.execute(
+        """
         UPDATE attendance
         SET check_out = ?
         WHERE employee_id = ?
         AND date = ?
-        AND check_out IS NULL
         """,
         (now, employee_id, today),
     )
 
-    updated = cursor.rowcount
-
     conn.commit()
     conn.close()
 
-    return updated > 0
+    return "SUCCESS"
 
 
 def get_today_attendance():

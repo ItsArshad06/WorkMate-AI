@@ -41,11 +41,22 @@ INTENTS = {
         "who am i",
     ],
 
+    "ATTENDANCE_ACTION": [
+        "check in",
+        "checkin",
+        "i'm here",
+        "im here",
+        "present",
+        "arrived",
+        "check out",
+        "checkout",
+        "going home",
+        "leaving",
+        "bye",
+    ],
+
     "ATTENDANCE": [
         "attendance",
-        "check in",
-        "check out",
-        "present",
     ],
 
     "DASHBOARD": [
@@ -66,9 +77,6 @@ INTENTS = {
 
 
 def detect_intent(message: str) -> str:
-    """
-    Returns the detected intent.
-    """
 
     message = message.lower().strip()
 
