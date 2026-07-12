@@ -15,6 +15,16 @@ class LeaveSkill:
         step = session["step"]
 
         if step == "START":
+
+            conversation.update_step(
+                user_id,
+                "WAITING_EMPLOYEE_ID",
+            )
+
+            return "🆔 Please enter your Employee ID."
+
+        elif step == "WAITING_EMPLOYEE_ID":
+
             conversation.save_data(
                 user_id,
                 "employee_id",
@@ -86,3 +96,6 @@ class LeaveSkill:
             )
 
         return "❌ Something went wrong."
+
+
+leave_skill = LeaveSkill()

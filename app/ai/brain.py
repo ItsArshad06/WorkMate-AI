@@ -1,9 +1,9 @@
 """
-WorkMate AI Brain
+WorkMate AI - Brain
 """
 
-from app.ai.intents import detect_intent
 from app.ai.conversation import conversation
+from app.ai.intents import detect_intent
 from app.ai.skill_manager import skill_manager
 
 
@@ -15,9 +15,8 @@ class WorkMateBrain:
         session = conversation.get(user_id)
 
         if session:
-            intent = session["intent"]
             return skill_manager.execute(
-                intent,
+                session["intent"],
                 user_id,
                 message,
             )
@@ -25,27 +24,19 @@ class WorkMateBrain:
         # Detect new intent
         intent = detect_intent(message)
 
-        if intent == "UNKNOWN":
+        if not skill_manager.has_skill(intent):
             return (
-                "🤖 Sorry, I didn't understand.\n\n"
-                "Try saying:\n"
-                "• I need leave\n"
-                "• Show my profile\n"
-                "• Check attendance"
+                "🤖 Sorry, I didn't understand that.\n"
+                "Try asking for leave, attendance, profile or help."
             )
 
-        # Start conversational skills
-        if intent == "APPLY_LEAVE":
-            return skill_manager.execute(
-                intent,
-                user_id,
-                message,
-            )
+        # Start conversation
+        conversation.start(user_id, intent)
 
-        return (
-            f"✅ I understood your request.\n"
-            f"Detected Intent: {intent}\n\n"
-            "This feature will be connected soon."
+        return skill_manager.execute(
+            intent,
+            user_id,
+            message,
         )
 
 
