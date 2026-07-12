@@ -38,18 +38,22 @@ INTENTS = {
     "PROFILE": [
         "profile",
         "my profile",
+        "show my profile",
         "who am i",
+        "my details",
     ],
 
     "ATTENDANCE_ACTION": [
         "check in",
         "checkin",
+        "check me in",
         "i'm here",
         "im here",
         "present",
         "arrived",
         "check out",
         "checkout",
+        "check me out",
         "going home",
         "leaving",
         "bye",

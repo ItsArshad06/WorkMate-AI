@@ -5,6 +5,7 @@ WorkMate AI - Skill Manager
 from app.skills.leave_skill import LeaveSkill
 from app.skills.login_skill import login_skill
 from app.skills.attendance_skill import attendance_skill
+from app.skills.profile_skill import profile_skill
 
 
 class SkillManager:
@@ -14,6 +15,7 @@ class SkillManager:
         self.skills = {
             "APPLY_LEAVE": LeaveSkill(),
             "ATTENDANCE_ACTION": attendance_skill,
+            "PROFILE": profile_skill,
         }
 
     def has_skill(self, intent):
