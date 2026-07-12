@@ -50,6 +50,34 @@ def get_all_leaves():
     return leaves
 
 
+def get_pending_leaves():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        """
+        SELECT id, employee_id, start_date, end_date, reason
+        FROM leaves
+        WHERE status='Pending'
+        ORDER BY id
+        """
+    )
+
+    data = cursor.fetchall()
+
+    conn.close()
+
+    return data
+
+
+def approve_leave(leave_id):
+    update_leave_status(leave_id, "Approved")
+
+
+def reject_leave(leave_id):
+    update_leave_status(leave_id, "Rejected")
+
+
 def update_leave_status(leave_id, status):
     conn = get_connection()
     cursor = conn.cursor()
@@ -75,7 +103,7 @@ def get_pending_leave_count():
         """
         SELECT COUNT(*)
         FROM leaves
-        WHERE status = 'Pending'
+        WHERE status='Pending'
         """
     )
 
@@ -94,7 +122,7 @@ def get_approved_leave_count():
         """
         SELECT COUNT(*)
         FROM leaves
-        WHERE status = 'Approved'
+        WHERE status='Approved'
         """
     )
 
@@ -113,7 +141,7 @@ def get_rejected_leave_count():
         """
         SELECT COUNT(*)
         FROM leaves
-        WHERE status = 'Rejected'
+        WHERE status='Rejected'
         """
     )
 

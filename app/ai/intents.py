@@ -1,59 +1,53 @@
 """
 WorkMate AI - Intent Detection
-
-This module identifies what the user wants to do.
-The Brain will use this to choose the correct skill.
 """
 
 
 INTENTS = {
     "APPLY_LEAVE": [
-        "leave",
         "apply leave",
         "need leave",
         "vacation",
         "holiday",
         "time off",
+        "leave",
     ],
 
     "APPROVE_LEAVE": [
         "approve leave",
         "approve",
-        "accept leave",
     ],
 
     "REJECT_LEAVE": [
         "reject leave",
         "reject",
-        "decline leave",
     ],
 
     "LIST_EMPLOYEES": [
-        "employees",
-        "employee list",
-        "list employees",
-        "show employees",
+        "show pending leaves",
+        "pending leaves",
+        "show pending",
     ],
 
     "PROFILE": [
-        "profile",
-        "my profile",
         "show my profile",
+        "my profile",
+        "profile",
         "who am i",
         "my details",
     ],
 
     "ATTENDANCE_ACTION": [
+        "check me in",
         "check in",
         "checkin",
-        "check me in",
         "i'm here",
         "im here",
-        "present",
         "arrived",
+        "present",
+        "check me out",
         "check out",
         "checkout",
-        "check me out",
         "going home",
         "leaving",
         "bye",
@@ -64,28 +58,45 @@ INTENTS = {
     ],
 
     "DASHBOARD": [
-        "dashboard",
+        "show dashboard",
         "hr dashboard",
+        "dashboard",
         "statistics",
         "stats",
+        "analytics",
+        "reports",
         "report",
     ],
 
     "HELP": [
         "help",
         "guide",
-        "how",
         "commands",
+        "how",
     ],
 }
+
+
+# Priority order
+PRIORITY = [
+    "APPROVE_LEAVE",
+    "REJECT_LEAVE",
+    "LIST_EMPLOYEES",
+    "DASHBOARD",
+    "ATTENDANCE_ACTION",
+    "ATTENDANCE",
+    "PROFILE",
+    "HELP",
+    "APPLY_LEAVE",
+]
 
 
 def detect_intent(message: str) -> str:
 
     message = message.lower().strip()
 
-    for intent, keywords in INTENTS.items():
-        for keyword in keywords:
+    for intent in PRIORITY:
+        for keyword in INTENTS[intent]:
             if keyword in message:
                 return intent
 
