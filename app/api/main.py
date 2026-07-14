@@ -1,10 +1,11 @@
-from app.api.routes.login import router as login_router
-from app.api.routes.dashboard import router as dashboard_router
-from app.api.routes.leave import router as leave_router
-from app.api.routes.attendance import router as attendance_router
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.routes.profile import router as profile_router
+from app.api.routes.attendance import router as attendance_router
+from app.api.routes.leave import router as leave_router
+from app.api.routes.dashboard import router as dashboard_router
+from app.api.routes.login import router as login_router
 
 app = FastAPI(
     title="WorkMate AI API",
@@ -12,19 +13,25 @@ app = FastAPI(
     description="HR Management Backend API",
 )
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:4200"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 @app.get("/")
 def home():
-    return {
-        "message": "Welcome to WorkMate AI API 🚀"
-    }
+    return {"message": "Welcome to WorkMate AI API 🚀"}
 
 
 @app.get("/health")
 def health():
     return {
         "status": "OK",
-        "service": "WorkMate AI"
+        "service": "WorkMate AI",
     }
 
 
