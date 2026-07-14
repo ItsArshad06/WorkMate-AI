@@ -1,3 +1,5 @@
+from app.api.routes.login import router as login_router
+from app.api.routes.dashboard import router as dashboard_router
 from app.api.routes.leave import router as leave_router
 from app.api.routes.attendance import router as attendance_router
 from fastapi import FastAPI
@@ -29,3 +31,5 @@ def health():
 app.include_router(profile_router)
 app.include_router(attendance_router)
 app.include_router(leave_router)
+app.include_router(dashboard_router)
+app.include_router(login_router)
