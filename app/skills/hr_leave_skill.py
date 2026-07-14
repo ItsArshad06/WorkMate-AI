@@ -1,5 +1,6 @@
 import re
 
+from app.ai.session import session
 from app.database.leave import (
     get_pending_leaves,
     approve_leave,
@@ -12,8 +13,13 @@ class HRLeaveSkill:
 
     def execute(self, user_id, message):
 
-        # Temporary until Session Integration (Pack 8)
-        employee_id = "EMP001"
+        employee_id = session.employee_id(user_id)
+
+        if employee_id is None:
+            return (
+                "🔐 Please login first.\n"
+                "Enter your Employee ID."
+            )
 
         if not is_hr(employee_id):
             return "❌ Only HR can perform this action."
@@ -34,8 +40,10 @@ class HRLeaveSkill:
             if not leaves:
                 return "✅ There are no pending leave requests."
 
-            response = "📝 Pending Leave Requests\n"
-            response += "━━━━━━━━━━━━━━━━━━\n\n"
+            response = (
+                "📝 Pending Leave Requests\n"
+                "━━━━━━━━━━━━━━━━━━\n\n"
+            )
 
             for leave in leaves:
                 response += (
@@ -48,7 +56,7 @@ class HRLeaveSkill:
             return response
 
         # -------------------------
-        # Approve
+        # Approve Leave
         # -------------------------
         if "approve" in text:
 
@@ -61,12 +69,10 @@ class HRLeaveSkill:
 
             approve_leave(leave_id)
 
-            return (
-                f"✅ Leave #{leave_id} has been approved."
-            )
+            return f"✅ Leave #{leave_id} has been approved."
 
         # -------------------------
-        # Reject
+        # Reject Leave
         # -------------------------
         if "reject" in text:
 
@@ -79,9 +85,7 @@ class HRLeaveSkill:
 
             reject_leave(leave_id)
 
-            return (
-                f"❌ Leave #{leave_id} has been rejected."
-            )
+            return f"❌ Leave #{leave_id} has been rejected."
 
         return "🤖 I couldn't understand your HR request."
 

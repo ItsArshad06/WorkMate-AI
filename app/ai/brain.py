@@ -11,32 +11,43 @@ class WorkMateBrain:
 
     def process(self, user_id: int, message: str):
 
-        # Continue existing conversation
-        session = conversation.get(user_id)
+        # Detect what the user currently wants
+        intent = detect_intent(message)
 
-        if session:
+        print("Detected Intent:", intent)
+
+        # If the user starts a new command, abandon the old conversation
+        if intent != "UNKNOWN":
+
+            current = conversation.get(user_id)
+
+            if current:
+
+                if current["intent"] != intent:
+                    conversation.clear(user_id)
+
+            if not conversation.get(user_id):
+                conversation.start(user_id, intent)
+
             return skill_manager.execute(
-                session["intent"],
+                intent,
                 user_id,
                 message,
             )
 
-        # Detect new intent
-        intent = detect_intent(message)
+        # Continue existing conversation only if no new intent was detected
+        current = conversation.get(user_id)
 
-        if not skill_manager.has_skill(intent):
-            return (
-                "🤖 Sorry, I didn't understand that.\n"
-                "Try asking for leave, attendance, profile or help."
+        if current:
+            return skill_manager.execute(
+                current["intent"],
+                user_id,
+                message,
             )
 
-        # Start conversation
-        conversation.start(user_id, intent)
-
-        return skill_manager.execute(
-            intent,
-            user_id,
-            message,
+        return (
+            "🤖 Sorry, I didn't understand that.\n"
+            "Try asking for leave, attendance, profile or help."
         )
 
 

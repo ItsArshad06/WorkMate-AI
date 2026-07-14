@@ -1,3 +1,4 @@
+from app.ai.session import session
 from app.database.employee import get_employee_details
 
 
@@ -5,8 +6,13 @@ class ProfileSkill:
 
     def execute(self, user_id, message):
 
-        # Temporary
-        employee_id = "EMP001"
+        employee_id = session.employee_id(user_id)
+
+        if employee_id is None:
+            return (
+                "🔐 Please login first.\n"
+                "Enter your Employee ID."
+            )
 
         employee = get_employee_details(employee_id)
 

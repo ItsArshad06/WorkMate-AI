@@ -1,4 +1,5 @@
 from app.ai.conversation import conversation
+from app.ai.session import session
 from app.database.leave import create_leave
 
 
@@ -6,29 +7,31 @@ class LeaveSkill:
 
     def execute(self, user_id, message):
 
-        session = conversation.get(user_id)
+        employee_id = session.employee_id(user_id)
 
-        if not session:
-            conversation.start(user_id, "APPLY_LEAVE")
-            return "🆔 Please enter your Employee ID."
-
-        step = session["step"]
-
-        if step == "START":
-
-            conversation.update_step(
-                user_id,
-                "WAITING_EMPLOYEE_ID",
+        if employee_id is None:
+            return (
+                "🔐 Please login first.\n"
+                "Enter your Employee ID."
             )
 
-            return "🆔 Please enter your Employee ID."
+        current = conversation.get(user_id)
 
-        elif step == "WAITING_EMPLOYEE_ID":
+        if not current:
+            conversation.start(user_id, "APPLY_LEAVE")
+            current = conversation.get(user_id)
+
+        step = current["step"]
+
+        # -----------------------------
+        # Start Leave Flow
+        # -----------------------------
+        if step == "START":
 
             conversation.save_data(
                 user_id,
                 "employee_id",
-                message.upper(),
+                employee_id,
             )
 
             conversation.update_step(
@@ -38,6 +41,9 @@ class LeaveSkill:
 
             return "📅 Enter Start Date (YYYY-MM-DD)"
 
+        # -----------------------------
+        # Start Date
+        # -----------------------------
         elif step == "WAITING_START_DATE":
 
             conversation.save_data(
@@ -53,6 +59,9 @@ class LeaveSkill:
 
             return "📅 Enter End Date (YYYY-MM-DD)"
 
+        # -----------------------------
+        # End Date
+        # -----------------------------
         elif step == "WAITING_END_DATE":
 
             conversation.save_data(
@@ -68,6 +77,9 @@ class LeaveSkill:
 
             return "📝 Enter Leave Reason"
 
+        # -----------------------------
+        # Reason
+        # -----------------------------
         elif step == "WAITING_REASON":
 
             conversation.save_data(

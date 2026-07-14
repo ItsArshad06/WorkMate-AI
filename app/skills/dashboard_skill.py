@@ -1,4 +1,6 @@
+from app.ai.session import session
 from app.utils.auth import is_hr
+
 from app.database.employee import get_employee_count
 from app.database.leave import (
     get_pending_leave_count,
@@ -12,8 +14,13 @@ class DashboardSkill:
 
     def execute(self, user_id, message):
 
-        # Temporary until login/session integration
-        employee_id = "EMP001"
+        employee_id = session.employee_id(user_id)
+
+        if employee_id is None:
+            return (
+                "🔐 Please login first.\n"
+                "Enter your Employee ID."
+            )
 
         if not is_hr(employee_id):
             return "❌ You are not authorized to view the HR dashboard."

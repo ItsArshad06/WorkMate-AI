@@ -1,3 +1,4 @@
+from app.ai.session import session
 from app.database.attendance import check_in, check_out
 
 
@@ -5,9 +6,15 @@ class AttendanceSkill:
 
     def execute(self, user_id, message):
 
-        text = message.lower().strip()
+        employee_id = session.employee_id(user_id)
 
-        employee_id = "EMP001"
+        if employee_id is None:
+            return (
+                "🔐 Please login first.\n"
+                "Enter your Employee ID."
+            )
+
+        text = message.lower().strip()
 
         checkin_keywords = [
             "check in",
@@ -38,7 +45,8 @@ class AttendanceSkill:
                     f"👤 Employee: {employee_id}"
                 )
 
-            return "⚠️ You have already checked in today."
+            if result == "ALREADY_CHECKED_IN":
+                return "⚠️ You have already checked in today."
 
         if any(keyword in text for keyword in checkout_keywords):
 
@@ -53,7 +61,8 @@ class AttendanceSkill:
             if result == "ALREADY_CHECKED_OUT":
                 return "⚠️ You have already checked out today."
 
-            return "⚠️ You haven't checked in today."
+            if result == "NOT_CHECKED_IN":
+                return "⚠️ You haven't checked in today."
 
         return "❌ I couldn't understand your attendance request."
 
