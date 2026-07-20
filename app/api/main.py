@@ -1,3 +1,4 @@
+from app.database.db import initialize_database
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -6,6 +7,7 @@ from app.api.routes.attendance import router as attendance_router
 from app.api.routes.leave import router as leave_router
 from app.api.routes.dashboard import router as dashboard_router
 from app.api.routes.login import router as login_router
+from app.api.routes.employees import router as employees_router
 
 app = FastAPI(
     title="WorkMate AI API",
@@ -15,7 +17,10 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:4200"],
+    allow_origins=[
+    "http://localhost:4200",
+    "http://localhost:61244"
+],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -40,3 +45,4 @@ app.include_router(attendance_router)
 app.include_router(leave_router)
 app.include_router(dashboard_router)
 app.include_router(login_router)
+app.include_router(employees_router)

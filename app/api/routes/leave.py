@@ -3,12 +3,16 @@ from pydantic import BaseModel
 
 from app.database.leave import (
     create_leave,
+    get_all_leaves,
     get_pending_leaves,
     approve_leave,
     reject_leave,
 )
 
-router = APIRouter()
+router = APIRouter(
+    prefix="/leave",
+    tags=["Leave"]
+)
 
 
 class LeaveRequest(BaseModel):
@@ -18,14 +22,14 @@ class LeaveRequest(BaseModel):
     reason: str
 
 
-@router.post("/leave/apply")
+@router.post("/")
 def apply_leave(request: LeaveRequest):
 
     create_leave(
         request.employee_id.upper(),
         request.start_date,
         request.end_date,
-        request.reason,
+        request.reason
     )
 
     return {
@@ -33,13 +37,29 @@ def apply_leave(request: LeaveRequest):
     }
 
 
-@router.get("/leave/pending")
+@router.get("/")
+def list_leaves():
+
+    leaves = get_all_leaves()
+
+    return [
+        dict(leave)
+        for leave in leaves
+    ]
+
+
+@router.get("/pending")
 def pending_leaves():
 
-    return get_pending_leaves()
+    leaves = get_pending_leaves()
+
+    return [
+        dict(leave)
+        for leave in leaves
+    ]
 
 
-@router.post("/leave/approve/{leave_id}")
+@router.post("/approve/{leave_id}")
 def approve_leave_api(leave_id: int):
 
     approve_leave(leave_id)
@@ -49,7 +69,7 @@ def approve_leave_api(leave_id: int):
     }
 
 
-@router.post("/leave/reject/{leave_id}")
+@router.post("/reject/{leave_id}")
 def reject_leave_api(leave_id: int):
 
     reject_leave(leave_id)

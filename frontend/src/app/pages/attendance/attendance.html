@@ -1,1 +1,189 @@
-<p>attendance works!</p>
+<div class="attendance-page">
+
+    <!-- Header -->
+
+    <div class="page-header">
+
+        <div>
+
+            <h1>📅 Attendance</h1>
+
+            <p>Track employee attendance</p>
+
+        </div>
+
+    </div>
+
+
+    <!-- Statistics -->
+
+    <div class="employee-stats">
+
+        <div class="stat-card">
+
+            <h3>🟢 Present</h3>
+
+            <strong>{{ presentCount }}</strong>
+
+        </div>
+
+        <div class="stat-card">
+
+            <h3>🔴 Absent</h3>
+
+                <strong>{{ workingCount }}</strong>
+        </div>
+
+        <div class="stat-card">
+
+            <h3>🟡 Leave</h3>
+
+            <strong>{{ leaveCount }}</strong>
+
+        </div>
+
+        <div class="stat-card">
+
+            <h3>📈 Attendance</h3>
+
+            <strong>{{ attendanceRate }}%</strong>
+
+        </div>
+
+    </div>
+
+
+    <!-- Today's Attendance -->
+
+    <div class="form-card">
+
+        <h2>Today's Attendance</h2>
+
+        <p>
+
+            <strong>Check In:</strong>
+
+            {{ todayCheckIn }}
+
+        </p>
+
+        <p>
+
+            <strong>Check Out:</strong>
+
+            {{ todayCheckOut }}
+
+        </p>
+
+        <p>
+
+            <strong>Working Hours:</strong>
+
+            {{ todayWorkingHours }}
+
+        </p>
+
+        <button
+
+            class="save-btn"
+
+            (click)="checkIn()">
+
+            🟢 Check In
+
+        </button>
+
+        <button
+
+            class="save-btn"
+
+            (click)="checkOut()">
+
+            🔴 Check Out
+
+        </button>
+
+    </div>
+
+
+    <!-- Attendance History -->
+
+    <div class="table-card">
+
+        <h2>Attendance History</h2>
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Date</th>
+
+                    <th>Check In</th>
+
+                    <th>Check Out</th>
+
+                    <th>Working Hours</th>
+
+                    <th>Status</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                @for(record of attendanceRecords; track record.date){
+
+                <tr>
+
+                    <td>{{ record.date }}</td>
+
+                    <td>{{ record.checkIn }}</td>
+
+                    <td>{{ record.checkOut }}</td>
+
+                    <td>{{ record.workingHours }}</td>
+
+                    <td>
+
+                        @if(record.status === 'Present') {
+
+                            <span class="active">
+
+                                {{ record.status }}
+
+                            </span>
+
+                        } @else if(record.status === 'Working') {
+
+                            <span style="color:#f59e0b;font-weight:600;">
+
+                                {{ record.status }}
+
+                            </span>
+
+                        } @else {
+
+                            <span class="leave">
+
+                                {{ record.status }}
+
+                            </span>
+
+                        }
+
+                    </td>
+
+                </tr>
+
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>

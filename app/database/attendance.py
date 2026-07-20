@@ -105,3 +105,51 @@ def get_today_attendance():
     conn.close()
 
     return data
+def get_employee_attendance(employee_id):
+
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        """
+        SELECT
+            id,
+            employee_id,
+            date,
+            check_in,
+            check_out
+        FROM attendance
+        WHERE employee_id = ?
+        ORDER BY date DESC
+        """,
+        (employee_id.upper(),)
+    )
+
+    attendance = cursor.fetchall()
+
+    conn.close()
+
+    return attendance
+
+
+def get_today_attendance_count():
+
+    today = datetime.now().strftime("%Y-%m-%d")
+
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        """
+        SELECT COUNT(*)
+        FROM attendance
+        WHERE date = ?
+        """,
+        (today,)
+    )
+
+    count = cursor.fetchone()[0]
+
+    conn.close()
+
+    return count

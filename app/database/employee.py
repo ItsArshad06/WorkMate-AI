@@ -1,34 +1,73 @@
 from app.database.db import get_connection
 
 
-def save_employee(full_name, employee_id, department, phone):
+
+def save_employee(
+    full_name,
+    employee_id,
+    email,
+    phone,
+    department,
+    role,
+    joining_date,
+    status
+):
+
     conn = get_connection()
     cursor = conn.cursor()
 
     cursor.execute(
         """
         INSERT INTO employees
-        (full_name, employee_id, department, phone)
-        VALUES (?, ?, ?, ?)
+        (
+            full_name,
+            employee_id,
+            email,
+            phone,
+            department,
+            role,
+            joining_date,
+            status
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         """,
-        (full_name, employee_id, department, phone),
+        (
+            full_name,
+            employee_id.upper(),
+            email,
+            phone,
+            department,
+            role,
+            joining_date,
+            status
+        )
     )
 
     conn.commit()
     conn.close()
 
 
+
 def get_employee(employee_id):
+
     conn = get_connection()
     cursor = conn.cursor()
 
     cursor.execute(
         """
-        SELECT full_name, employee_id, department, phone
+        SELECT
+            full_name,
+            employee_id,
+            email,
+            phone,
+            department,
+            role,
+            joining_date,
+            status
         FROM employees
         WHERE employee_id = ?
         """,
-        (employee_id.upper(),),
+        (employee_id.upper(),)
     )
 
     employee = cursor.fetchone()
@@ -38,33 +77,55 @@ def get_employee(employee_id):
     return employee
 
 
-def employee_exists(employee_id):
+
+def get_employee_details(employee_id):
+
     conn = get_connection()
     cursor = conn.cursor()
 
     cursor.execute(
         """
-        SELECT 1
+        SELECT
+            id,
+            full_name,
+            employee_id,
+            email,
+            phone,
+            department,
+            role,
+            joining_date,
+            status
         FROM employees
         WHERE employee_id = ?
         """,
-        (employee_id.upper(),),
+        (employee_id.upper(),)
     )
 
-    row = cursor.fetchone()
+    employee = cursor.fetchone()
 
     conn.close()
 
-    return row is not None
+    return employee
+
 
 
 def get_all_employees():
+
     conn = get_connection()
     cursor = conn.cursor()
 
     cursor.execute(
         """
-        SELECT full_name, employee_id, department
+        SELECT
+            id,
+            full_name,
+            employee_id,
+            email,
+            phone,
+            department,
+            role,
+            joining_date,
+            status
         FROM employees
         ORDER BY full_name
         """
@@ -77,7 +138,31 @@ def get_all_employees():
     return employees
 
 
+
+def employee_exists(employee_id):
+
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        """
+        SELECT 1
+        FROM employees
+        WHERE employee_id = ?
+        """,
+        (employee_id.upper(),)
+    )
+
+    result = cursor.fetchone()
+
+    conn.close()
+
+    return result is not None
+
+
+
 def get_employee_count():
+
     conn = get_connection()
     cursor = conn.cursor()
 
@@ -92,24 +177,20 @@ def get_employee_count():
     return count
 
 
-def get_employee_details(employee_id):
+
+def delete_employee(employee_id):
+
     conn = get_connection()
     cursor = conn.cursor()
 
     cursor.execute(
         """
-        SELECT full_name,
-               employee_id,
-               department,
-               phone
-        FROM employees
+        DELETE FROM employees
         WHERE employee_id = ?
         """,
-        (employee_id.upper(),),
+        (employee_id.upper(),)
     )
 
-    employee = cursor.fetchone()
+    conn.commit()
 
     conn.close()
-
-    return employee

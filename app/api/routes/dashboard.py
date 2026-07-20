@@ -6,17 +6,20 @@ from app.database.leave import (
     get_approved_leave_count,
     get_rejected_leave_count,
 )
-from app.database.attendance import get_today_attendance
+from app.database.attendance import get_today_attendance_count
 
-router = APIRouter()
+router = APIRouter(
+    prefix="/dashboard",
+    tags=["Dashboard"]
+)
 
 
-@router.get("/dashboard")
+@router.get("/")
 def dashboard():
 
     return {
         "total_employees": get_employee_count(),
-        "today_attendance": len(get_today_attendance()),
+        "present_today": get_today_attendance_count(),
         "pending_leaves": get_pending_leave_count(),
         "approved_leaves": get_approved_leave_count(),
         "rejected_leaves": get_rejected_leave_count(),

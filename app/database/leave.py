@@ -150,3 +150,51 @@ def get_rejected_leave_count():
     conn.close()
 
     return count
+def leave_exists(leave_id):
+
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        """
+        SELECT 1
+        FROM leaves
+        WHERE id = ?
+        """,
+        (leave_id,)
+    )
+
+    result = cursor.fetchone()
+
+    conn.close()
+
+    return result is not None
+def get_employee_leave_summary(employee_id):
+
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        """
+        SELECT status, COUNT(*) AS total
+        FROM leaves
+        WHERE employee_id = ?
+        GROUP BY status
+        """,
+        (employee_id.upper(),)
+    )
+
+    rows = cursor.fetchall()
+
+    conn.close()
+
+    summary = {
+        "Pending": 0,
+        "Approved": 0,
+        "Rejected": 0,
+    }
+
+    for row in rows:
+        summary[row["status"]] = row["total"]
+
+    return summary

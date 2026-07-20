@@ -1,5 +1,5 @@
 HR_ADMINS = [
-    "EMP001",  # Change this to your HR/Admin Employee ID
+    "EMP-101",
 ]
 
 

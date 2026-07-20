@@ -1,1 +1,519 @@
-<p>dashboard works!</p>
+<div class="dashboard">
+
+    <!-- Sidebar -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <h2>🤖 WorkMate AI</h2>
+
+            <p>Enterprise HR</p>
+
+        </div>
+
+        <nav>
+
+        <a class="active" routerLink="/dashboard">
+    🏠 Dashboard
+</a>
+
+<a routerLink="/employees">
+    👥 Employees
+</a>
+
+<a routerLink="/attendance">
+    📅 Attendance
+</a>
+
+<a routerLink="/leave">
+    📝 Leave
+</a>
+
+<a routerLink="/analytics">
+    📊 Analytics
+</a>
+
+<a routerLink="/ai-assistant">
+    🤖 AI Assistant
+</a>
+
+<a routerLink="/settings">
+    ⚙ Settings
+</a>
+        </nav>
+
+    </aside>
+
+    <!-- Main -->
+
+    <main class="main-content">
+
+        <!-- Topbar -->
+
+        <header class="topbar">
+
+    <div>
+
+        <h1>
+            Welcome Back 👋
+        </h1>
+
+        <p>
+            Here's today's HR overview.
+        </p>
+
+    </div>
+
+
+    <div class="profile">
+
+
+        <div class="notification">
+            🔔
+        </div>
+
+
+        <div class="user-box">
+
+
+            <div class="avatar">
+                A
+            </div>
+
+
+            <div class="user-info">
+
+                <strong>
+                    Arshu
+                </strong>
+
+                <p>
+                    HR Admin
+                </p>
+
+            </div>
+
+
+            </div>
+
+
+        </div>
+
+
+        </header>
+        <section class="summary-banner">
+
+    <div>
+
+        <h2>
+            Good Morning, Arshu 👋
+        </h2>
+
+        <p>
+            WorkMate AI has analyzed today's workforce activity.
+        </p>
+
+    </div>
+
+
+    <div class="summary-items">
+
+        <div>
+            📅 Attendance
+            <strong>96%</strong>
+        </div>
+
+
+        <div>
+            📝 Pending Leaves
+            <strong>4</strong>
+        </div>
+
+
+        <div>
+            🤖 AI Status
+            <strong>Healthy</strong>
+        </div>
+
+    </div>
+
+
+</section>
+        <!-- KPI CARDS -->
+
+        <section class="cards">
+
+            <div class="card">
+
+                <h3>Employees</h3>
+
+                <h2>247</h2>
+
+                <p>+12 this month</p>
+
+            </div>
+
+            <div class="card">
+
+                <h3>Attendance</h3>
+
+                <h2>96%</h2>
+
+                <p>Today's attendance</p>
+
+            </div>
+
+            <div class="card">
+
+                <h3>Leave Requests</h3>
+
+                <h2>8</h2>
+
+                <p>Pending Approval</p>
+
+            </div>
+
+            <div class="card ai">
+
+                <h3>AI Insights</h3>
+
+                <h2>18</h2>
+
+                <p>Tasks Completed</p>
+
+            </div>
+
+        </section>
+        <!-- EXTRA DASHBOARD SECTION -->
+
+<section class="extra-grid">
+
+
+    <!-- AI ASSISTANT -->
+
+    <div class="ai-assistant">
+
+        <div class="ai-header">
+
+            <h2>🤖 WorkMate AI Assistant</h2>
+
+            <span class="online">
+                Online
+            </span>
+
+        </div>
+
+
+        <div class="ai-message">
+
+            Good morning! 👋
+
+            <br><br>
+
+            Attendance is looking healthy today.
+
+            <br><br>
+
+            I detected:
+
+            <br>
+
+            • 96% attendance rate
+
+            <br>
+
+            • 4 pending leave requests
+
+            <br>
+
+            • No unusual activity
+
+        </div>
+
+
+        <button>
+
+            Generate HR Report →
+
+        </button>
+
+
+    </div>
+
+
+
+    <!-- NOTIFICATIONS -->
+
+
+    <div class="notifications">
+
+        <h2>🔔 Notifications</h2>
+
+
+        <div class="notification-item">
+
+            <strong>
+                Leave Request
+            </strong>
+
+            <p>
+                Rahul requested leave approval
+            </p>
+
+        </div>
+
+
+        <div class="notification-item">
+
+            <strong>
+                Attendance Alert
+            </strong>
+
+            <p>
+                3 employees checked in late
+            </p>
+
+        </div>
+
+
+        <div class="notification-item">
+
+            <strong>
+                System Update
+            </strong>
+
+            <p>
+                AI reports generated successfully
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- EVENTS -->
+
+
+    <div class="events">
+
+
+        <h2>📅 Upcoming</h2>
+
+
+        <div class="event">
+
+            <span>
+                24
+            </span>
+
+            <p>
+                Team Meeting
+                <br>
+                10:30 AM
+            </p>
+
+        </div>
+
+
+        <div class="event">
+
+            <span>
+                27
+            </span>
+
+            <p>
+                Performance Review
+                <br>
+                2:00 PM
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+</section>
+    </main>
+
+</div>
+<!-- DASHBOARD CONTENT -->
+
+<section class="dashboard-grid">
+
+    <div class="activity">
+
+        <h2>Recent Activity</h2>
+
+        <div class="activity-item">
+
+            <div>
+                <strong>Rahul Sharma</strong>
+                <p>Checked in at 9:01 AM</p>
+            </div>
+
+            <span class="success">Present</span>
+
+        </div>
+
+        <div class="activity-item">
+
+            <div>
+                <strong>Priya Singh</strong>
+                <p>Leave request submitted</p>
+            </div>
+
+            <span class="pending">Pending</span>
+
+        </div>
+
+        <div class="activity-item">
+
+            <div>
+                <strong>Ahmed Khan</strong>
+                <p>Profile updated</p>
+            </div>
+
+            <span class="info">Updated</span>
+
+        </div>
+
+        <div class="activity-item">
+
+            <div>
+                <strong>Kavya Reddy</strong>
+                <p>Attendance corrected</p>
+            </div>
+
+            <span class="success">Done</span>
+
+        </div>
+
+    </div>
+
+    <div class="right-column">
+
+        <div class="ai-panel">
+
+            <h2>🤖 AI Insights</h2>
+
+            <div class="ai-box">
+
+                Attendance increased by <strong>12%</strong> this month.
+
+            </div>
+
+            <div class="ai-box">
+
+                Four leave requests require HR approval.
+
+            </div>
+
+            <div class="ai-box">
+
+                Productivity is predicted to increase this week.
+
+            </div>
+
+        </div>
+
+        <div class="quick-actions">
+
+            <h2>Quick Actions</h2>
+
+            <button>Add Employee</button>
+
+            <button>Generate Report</button>
+
+            <button>Approve Leave</button>
+
+            <button>View Analytics</button>
+
+        </div>
+
+    </div>
+
+</section>
+<section class="bottom-grid">
+
+    <!-- Attendance Chart -->
+
+    <div class="chart-card">
+
+        <h2>Weekly Attendance</h2>
+
+        <div class="chart">
+
+            <div class="bar">
+                <span style="height:85%"></span>
+                <p>Mon</p>
+            </div>
+
+            <div class="bar">
+                <span style="height:92%"></span>
+                <p>Tue</p>
+            </div>
+
+            <div class="bar">
+                <span style="height:78%"></span>
+                <p>Wed</p>
+            </div>
+
+            <div class="bar">
+                <span style="height:96%"></span>
+                <p>Thu</p>
+            </div>
+
+            <div class="bar">
+                <span style="height:88%"></span>
+                <p>Fri</p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Employee Status -->
+
+    <div class="status-card">
+
+        <h2>Employee Status</h2>
+
+        <div class="status-item">
+
+            <span>🟢 Rahul Sharma</span>
+
+            <strong>Online</strong>
+
+        </div>
+
+        <div class="status-item">
+
+            <span>🟢 Priya Singh</span>
+
+            <strong>Working</strong>
+
+        </div>
+
+        <div class="status-item">
+
+            <span>🟡 Ahmed Khan</span>
+
+            <strong>On Leave</strong>
+
+        </div>
+
+        <div class="status-item">
+
+            <span>🔴 Kavya Reddy</span>
+
+            <strong>Offline</strong>
+
+        </div>
+
+    </div>
+
+</section>

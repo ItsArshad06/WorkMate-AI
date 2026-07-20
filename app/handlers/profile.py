@@ -1,52 +1,34 @@
 from telegram import Update
 from telegram.ext import (
     ContextTypes,
-    ConversationHandler,
     CommandHandler,
-    MessageHandler,
-    filters,
 )
 
-from app.database.employee import get_employee
-
-EMPLOYEE_ID = 0
+from app.database.session import get_session
 
 
 async def profile(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("🆔 Enter your Employee ID:")
-    return EMPLOYEE_ID
 
+    telegram_user_id = update.effective_user.id
 
-async def show_profile(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    employee_id = update.message.text
+    session = get_session(telegram_user_id)
 
-    employee = get_employee(employee_id)
-
-    if employee:
+    if session is None:
         await update.message.reply_text(
-            f"👤 Employee Profile\n\n"
-            f"Name: {employee[0]}\n"
-            f"Employee ID: {employee[1]}\n"
-            f"Department: {employee[2]}\n"
-            f"Phone: {employee[3]}"
+            "❌ You are not logged in.\n\nUse /login first."
         )
-    else:
-        await update.message.reply_text("❌ Employee not found.")
+        return
 
-    return ConversationHandler.END
+    await update.message.reply_text(
+        f"👤 Employee Profile\n\n"
+        f"Name: {session['employee_name']}\n"
+        f"Employee ID: {session['employee_id']}\n"
+        f"Department: {session['department']}\n"
+        f"Role: {session['role']}"
+    )
 
 
-async def cancel(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("Cancelled.")
-    return ConversationHandler.END
-
-
-profile_handler = ConversationHandler(
-    entry_points=[CommandHandler("myprofile", profile)],
-    states={
-        EMPLOYEE_ID: [
-            MessageHandler(filters.TEXT & ~filters.COMMAND, show_profile)
-        ]
-    },
-    fallbacks=[CommandHandler("cancel", cancel)],
+profile_handler = CommandHandler(
+    "myprofile",
+    profile
 )

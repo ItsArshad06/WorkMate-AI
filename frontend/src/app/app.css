@@ -1,0 +1,1251 @@
+/* ===========================================================
+   WORKMATE AI DESIGN SYSTEM
+=========================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+
+:root{
+
+--bg:#F5F7FB;
+
+--surface:rgba(255,255,255,.72);
+
+--surfaceSolid:#FFFFFF;
+
+--border:rgba(255,255,255,.55);
+
+--text:#0F172A;
+
+--muted:#64748B;
+
+--primary:#2563EB;
+
+--primaryLight:#DBEAFE;
+
+--shadow:
+
+0 25px 60px rgba(15,23,42,.08);
+
+--radius:28px;
+
+}
+
+*{
+
+margin:0;
+
+padding:0;
+
+box-sizing:border-box;
+
+font-family:'Manrope',sans-serif;
+
+}
+
+html,
+body{
+
+width:100%;
+
+height:100%;
+
+overflow:hidden;
+
+background:var(--bg);
+
+}
+
+body{
+
+position:relative;
+
+}
+
+/* ===========================================================
+   IOS BACKGROUND
+=========================================================== */
+
+body::before{
+
+content:"";
+
+position:fixed;
+
+inset:0;
+
+background:
+
+radial-gradient(circle at 15% 20%,
+rgba(59,130,246,.20),
+transparent 35%),
+
+radial-gradient(circle at 85% 15%,
+rgba(168,85,247,.14),
+transparent 28%),
+
+radial-gradient(circle at 50% 90%,
+rgba(34,197,94,.10),
+transparent 35%),
+
+linear-gradient(
+180deg,
+#FAFBFF,
+#EEF3FA
+);
+
+z-index:-3;
+
+}
+/* ===========================================================
+   APP LAYOUT
+=========================================================== */
+
+:host{
+
+display:block;
+
+width:100%;
+
+height:100%;
+
+}
+
+.layout{
+
+display:flex;
+
+gap:28px;
+
+padding:24px;
+
+width:100%;
+
+height:100vh;
+
+}
+
+/* ===========================================================
+   SIDEBAR
+=========================================================== */
+
+.sidebar{
+
+width:270px;
+
+background:var(--surface);
+
+backdrop-filter:blur(28px);
+
+-webkit-backdrop-filter:blur(28px);
+
+border:1px solid var(--border);
+
+border-radius:34px;
+
+padding:26px;
+
+box-shadow:var(--shadow);
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:space-between;
+
+}
+
+/* ===========================================================
+   LOGO
+=========================================================== */
+
+.logo{
+
+display:flex;
+
+align-items:center;
+
+gap:12px;
+
+margin-bottom:42px;
+
+}
+
+.logo-main{
+
+font-size:28px;
+
+font-weight:800;
+
+letter-spacing:-1px;
+
+color:var(--text);
+
+}
+
+.logo-ai{
+
+padding:8px 16px;
+
+border-radius:999px;
+
+background:linear-gradient(
+135deg,
+#2563EB,
+#60A5FA
+);
+
+color:white;
+
+font-size:13px;
+
+font-weight:700;
+
+box-shadow:
+
+0 12px 25px rgba(37,99,235,.20);
+
+}
+
+/* ===========================================================
+   NAVIGATION
+=========================================================== */
+
+.sidebar nav{
+
+display:flex;
+
+flex-direction:column;
+
+gap:10px;
+
+}
+
+.sidebar nav a{
+
+text-decoration:none;
+
+color:var(--muted);
+
+padding:15px 18px;
+
+border-radius:18px;
+
+font-size:15px;
+
+font-weight:700;
+
+transition:.30s;
+
+display:flex;
+
+align-items:center;
+
+gap:12px;
+
+}
+
+.sidebar nav a:hover{
+
+background:white;
+
+color:var(--text);
+
+transform:translateX(6px);
+
+box-shadow:
+
+0 12px 30px rgba(15,23,42,.05);
+
+}
+
+.sidebar nav a.active{
+
+background:linear-gradient(
+135deg,
+#2563EB,
+#3B82F6
+);
+
+color:white;
+
+box-shadow:
+
+0 18px 35px rgba(37,99,235,.20);
+
+}
+/* ===========================================================
+   MAIN WORKSPACE
+=========================================================== */
+
+.main{
+
+flex:1;
+
+display:flex;
+
+flex-direction:column;
+
+background:rgba(255,255,255,.55);
+
+backdrop-filter:blur(30px);
+
+-webkit-backdrop-filter:blur(30px);
+
+border-radius:34px;
+
+border:1px solid rgba(255,255,255,.55);
+
+box-shadow:var(--shadow);
+
+overflow:hidden;
+
+}
+
+/* ===========================================================
+   TOPBAR
+=========================================================== */
+
+.topbar{
+
+height:90px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+padding:0 34px;
+
+background:rgba(255,255,255,.45);
+
+backdrop-filter:blur(25px);
+
+border-bottom:1px solid rgba(255,255,255,.55);
+
+}
+
+.topbar h2{
+
+font-size:28px;
+
+font-weight:800;
+
+letter-spacing:-1px;
+
+color:var(--text);
+
+}
+
+/* ===========================================================
+   ACTIONS
+=========================================================== */
+
+.actions{
+
+display:flex;
+
+align-items:center;
+
+gap:18px;
+
+}
+
+/* ===========================================================
+   SEARCH BAR
+=========================================================== */
+
+.actions input{
+
+width:320px;
+
+height:50px;
+
+padding:0 20px;
+
+background:white;
+
+border:none;
+
+border-radius:999px;
+
+outline:none;
+
+font-size:15px;
+
+font-weight:600;
+
+color:var(--text);
+
+box-shadow:
+
+0 10px 25px rgba(15,23,42,.05);
+
+transition:.30s;
+
+}
+
+.actions input::placeholder{
+
+color:#94A3B8;
+
+}
+
+.actions input:focus{
+
+width:360px;
+
+box-shadow:
+
+0 18px 35px rgba(37,99,235,.12);
+
+}
+
+/* ===========================================================
+   NOTIFICATION BUTTON
+=========================================================== */
+
+.actions button{
+
+height:50px;
+
+padding:0 24px;
+
+border:none;
+
+border-radius:999px;
+
+background:white;
+
+color:var(--text);
+
+font-size:14px;
+
+font-weight:700;
+
+cursor:pointer;
+
+box-shadow:
+
+0 10px 25px rgba(15,23,42,.05);
+
+transition:.30s;
+
+}
+
+.actions button:hover{
+
+transform:translateY(-3px);
+
+box-shadow:
+
+0 18px 35px rgba(15,23,42,.10);
+
+}
+
+/* ===========================================================
+   CONTENT AREA
+=========================================================== */
+
+.content{
+
+flex:1;
+
+padding:34px;
+
+overflow:auto;
+
+display:flex;
+
+flex-direction:column;
+
+gap:28px;
+
+}
+/* ===========================================================
+   GLASS CARDS
+=========================================================== */
+
+.glass-card{
+
+background:rgba(255,255,255,.72);
+
+backdrop-filter:blur(24px);
+
+-webkit-backdrop-filter:blur(24px);
+
+border-radius:28px;
+
+padding:28px;
+
+border:1px solid rgba(255,255,255,.65);
+
+box-shadow:
+
+0 20px 45px rgba(15,23,42,.06);
+
+transition:.35s;
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+.glass-card:hover{
+
+transform:translateY(-8px);
+
+box-shadow:
+
+0 35px 70px rgba(15,23,42,.10);
+
+}
+
+/* ==============================================
+   SHINE EFFECT
+============================================== */
+
+.glass-card::before{
+
+content:"";
+
+position:absolute;
+
+top:-60%;
+
+left:-60%;
+
+width:220px;
+
+height:220px;
+
+background:
+
+radial-gradient(circle,
+rgba(255,255,255,.65),
+transparent 70%);
+
+transition:.6s;
+
+pointer-events:none;
+
+}
+
+.glass-card:hover::before{
+
+top:-20%;
+
+left:-20%;
+
+}
+
+/* ===========================================================
+   WIDGET GRID
+=========================================================== */
+
+.widgets{
+
+display:grid;
+
+grid-template-columns:
+
+repeat(auto-fit,minmax(260px,1fr));
+
+gap:24px;
+
+}
+
+/* ===========================================================
+   WIDGET
+=========================================================== */
+
+.widget{
+
+background:white;
+
+border-radius:24px;
+
+padding:26px;
+
+box-shadow:
+
+0 18px 40px rgba(15,23,42,.05);
+
+transition:.35s;
+
+display:flex;
+
+flex-direction:column;
+
+gap:14px;
+
+cursor:pointer;
+
+}
+
+.widget:hover{
+
+transform:
+
+translateY(-6px)
+scale(1.02);
+
+box-shadow:
+
+0 30px 60px rgba(15,23,42,.08);
+
+}
+
+/* ===========================================================
+   TITLES
+=========================================================== */
+
+.widget-title{
+
+font-size:15px;
+
+font-weight:700;
+
+color:#64748B;
+
+}
+
+.widget-number{
+
+font-size:42px;
+
+font-weight:800;
+
+letter-spacing:-2px;
+
+color:#0F172A;
+
+}
+
+.widget-sub{
+
+font-size:14px;
+
+font-weight:600;
+
+color:#94A3B8;
+
+}
+
+/* ===========================================================
+   PROGRESS BAR
+=========================================================== */
+
+.progress{
+
+width:100%;
+
+height:10px;
+
+background:#E5E7EB;
+
+border-radius:999px;
+
+overflow:hidden;
+
+margin-top:8px;
+
+}
+
+.progress-fill{
+
+height:100%;
+
+border-radius:999px;
+
+background:linear-gradient(
+
+90deg,
+
+#2563EB,
+
+#60A5FA
+
+);
+
+}
+
+/* ===========================================================
+   HOVER GLOW
+=========================================================== */
+
+.widget:hover .progress-fill{
+
+box-shadow:
+
+0 0 25px rgba(37,99,235,.35);
+
+}
+
+/* ===========================================================
+   MINI TAGS
+=========================================================== */
+
+.tag{
+
+display:inline-flex;
+
+align-items:center;
+
+justify-content:center;
+
+padding:8px 16px;
+
+border-radius:999px;
+
+background:#EEF4FF;
+
+color:#2563EB;
+
+font-size:13px;
+
+font-weight:700;
+
+width:max-content;
+
+}
+/* ===========================================================
+   FLOATING DECORATION BLOBS
+=========================================================== */
+
+.layout::before{
+
+content:"";
+
+position:fixed;
+
+width:420px;
+
+height:420px;
+
+top:-120px;
+
+right:-100px;
+
+border-radius:50%;
+
+background:
+
+radial-gradient(circle,
+rgba(59,130,246,.22),
+transparent 70%);
+
+filter:blur(40px);
+
+z-index:-1;
+
+animation:floatBlob1 18s ease-in-out infinite;
+
+}
+
+.layout::after{
+
+content:"";
+
+position:fixed;
+
+width:360px;
+
+height:360px;
+
+bottom:-120px;
+
+left:-80px;
+
+border-radius:50%;
+
+background:
+
+radial-gradient(circle,
+rgba(168,85,247,.16),
+transparent 70%);
+
+filter:blur(45px);
+
+z-index:-1;
+
+animation:floatBlob2 20s ease-in-out infinite;
+
+}
+
+@keyframes floatBlob1{
+
+0%{
+
+transform:
+translateY(0)
+translateX(0);
+
+}
+
+50%{
+
+transform:
+translateY(25px)
+translateX(-30px);
+
+}
+
+100%{
+
+transform:
+translateY(0)
+translateX(0);
+
+}
+
+}
+
+@keyframes floatBlob2{
+
+0%{
+
+transform:
+translateY(0)
+translateX(0);
+
+}
+
+50%{
+
+transform:
+translateY(-20px)
+translateX(25px);
+
+}
+
+100%{
+
+transform:
+translateY(0)
+translateX(0);
+
+}
+
+}
+
+/* ===========================================================
+   SCROLLBAR
+=========================================================== */
+
+::-webkit-scrollbar{
+
+width:10px;
+
+height:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+background:transparent;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+background:#D7DFEC;
+
+border-radius:999px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+background:#B7C5DA;
+
+}
+
+/* ===========================================================
+   TEXT SELECTION
+=========================================================== */
+
+::selection{
+
+background:#2563EB;
+
+color:white;
+
+}
+
+/* ===========================================================
+   BUTTONS
+=========================================================== */
+
+button{
+
+font-family:'Manrope',sans-serif;
+
+}
+
+button:active{
+
+transform:scale(.98);
+
+}
+
+/* ===========================================================
+   INPUTS
+=========================================================== */
+
+input{
+
+font-family:'Manrope',sans-serif;
+
+}
+
+input:focus{
+
+outline:none;
+
+}
+
+/* ===========================================================
+   SMOOTH TRANSITIONS
+=========================================================== */
+
+a,
+button,
+input,
+.widget,
+.glass-card{
+
+transition:
+
+all .30s ease;
+
+}
+
+/* ===========================================================
+   FADE IN
+=========================================================== */
+
+.fade-in{
+
+animation:fadeIn .8s ease;
+
+}
+
+@keyframes fadeIn{
+
+from{
+
+opacity:0;
+
+transform:translateY(20px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+}
+
+/* ===========================================================
+   PAGE TITLE
+=========================================================== */
+
+.page-title{
+
+font-size:36px;
+
+font-weight:800;
+
+letter-spacing:-1px;
+
+color:var(--text);
+
+margin-bottom:10px;
+
+}
+
+.page-subtitle{
+
+font-size:16px;
+
+color:var(--muted);
+
+margin-bottom:28px;
+
+line-height:1.7;
+
+}
+/* ===========================================================
+   STATUS BADGES
+=========================================================== */
+
+.status{
+
+display:inline-flex;
+
+align-items:center;
+
+justify-content:center;
+
+padding:8px 16px;
+
+border-radius:999px;
+
+font-size:13px;
+
+font-weight:700;
+
+}
+
+.status.success{
+
+background:#DCFCE7;
+
+color:#15803D;
+
+}
+
+.status.warning{
+
+background:#FEF3C7;
+
+color:#B45309;
+
+}
+
+.status.danger{
+
+background:#FEE2E2;
+
+color:#B91C1C;
+
+}
+
+.status.info{
+
+background:#DBEAFE;
+
+color:#1D4ED8;
+
+}
+
+/* ===========================================================
+   DIVIDERS
+=========================================================== */
+
+.divider{
+
+width:100%;
+
+height:1px;
+
+background:rgba(15,23,42,.08);
+
+margin:24px 0;
+
+}
+
+/* ===========================================================
+   FLOATING EFFECT
+=========================================================== */
+
+.sidebar,
+.main{
+
+animation:floatUp .8s ease;
+
+}
+
+@keyframes floatUp{
+
+from{
+
+opacity:0;
+
+transform:
+translateY(25px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:
+translateY(0);
+
+}
+
+}
+
+/* ===========================================================
+   HOVER EFFECTS
+=========================================================== */
+
+.sidebar nav a:hover{
+
+background:rgba(255,255,255,.95);
+
+color:#111827;
+
+}
+
+.actions input:hover{
+
+box-shadow:
+
+0 18px 35px rgba(15,23,42,.08);
+
+}
+
+.actions button:hover{
+
+background:#2563EB;
+
+color:white;
+
+}
+
+/* ===========================================================
+   RESPONSIVE
+=========================================================== */
+
+@media(max-width:1200px){
+
+.layout{
+
+padding:16px;
+
+gap:16px;
+
+}
+
+.sidebar{
+
+width:230px;
+
+}
+
+.actions input{
+
+width:240px;
+
+}
+
+}
+
+@media(max-width:900px){
+
+.layout{
+
+flex-direction:column;
+
+height:auto;
+
+}
+
+.sidebar{
+
+width:100%;
+
+border-radius:28px;
+
+}
+
+.sidebar nav{
+
+flex-direction:row;
+
+flex-wrap:wrap;
+
+}
+
+.main{
+
+min-height:70vh;
+
+}
+
+.topbar{
+
+padding:20px;
+
+height:auto;
+
+flex-direction:column;
+
+align-items:flex-start;
+
+gap:20px;
+
+}
+
+.actions{
+
+width:100%;
+
+}
+
+.actions input{
+
+width:100%;
+
+}
+
+}
+
+@media(max-width:600px){
+
+.layout{
+
+padding:12px;
+
+}
+
+.sidebar{
+
+padding:18px;
+
+}
+
+.main{
+
+border-radius:24px;
+
+}
+
+.topbar h2{
+
+font-size:22px;
+
+}
+
+.logo-main{
+
+font-size:22px;
+
+}
+
+.logo-ai{
+
+padding:6px 12px;
+
+}
+
+.content{
+
+padding:20px;
+
+}
+
+}
+
+/* ===========================================================
+   END OF APP.CSS
+=========================================================== */
