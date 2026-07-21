@@ -1,0 +1,44 @@
+text,intent
+show dashboard,dashboard
+show my dashboard,dashboard
+dashboard,dashboard
+open dashboard,dashboard
+my dashboard,dashboard
+employee dashboard,dashboard
+display dashboard,dashboard
+show overview,dashboard
+show summary,dashboard
+give dashboard,dashboard
+
+show attendance,attendance
+attendance,attendance
+attendance today,attendance
+did i check in today,attendance
+have i checked in,attendance
+show my attendance,attendance
+attendance status,attendance
+am i present today,attendance
+show latest attendance,attendance
+when did i check in,attendance
+
+show leave summary,leave
+leave summary,leave
+show my leaves,leave
+how many leaves do i have,leave
+leave balance,leave
+show leave,leave
+vacation summary,leave
+holiday summary,leave
+time off summary,leave
+my leave details,leave
+
+show profile,profile
+my profile,profile
+employee profile,profile
+who am i,profile
+show employee details,profile
+display profile,profile
+view profile,profile
+profile please,profile
+my information,profile
+employee information,profile
