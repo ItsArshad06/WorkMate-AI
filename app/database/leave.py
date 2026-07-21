@@ -198,3 +198,30 @@ def get_employee_leave_summary(employee_id):
         summary[row["status"]] = row["total"]
 
     return summary
+def get_leave_statistics():
+
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        """
+        SELECT status, COUNT(*)
+        FROM leaves
+        GROUP BY status
+        """
+    )
+
+    rows = cursor.fetchall()
+
+    conn.close()
+
+    stats = {
+        "Pending": 0,
+        "Approved": 0,
+        "Rejected": 0,
+    }
+
+    for row in rows:
+        stats[row["status"]] = row["COUNT(*)"]
+
+    return stats

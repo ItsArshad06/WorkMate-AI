@@ -59,3 +59,9 @@ show absent employees,missing_attendance
 who is absent today,missing_attendance
 employees missing attendance,missing_attendance
 who did not check in,missing_attendance
+show hr dashboard,hr_dashboard
+hr dashboard,hr_dashboard
+company summary,hr_dashboard
+today summary,hr_dashboard
+daily report,hr_dashboard
+organization summary,hr_dashboard
