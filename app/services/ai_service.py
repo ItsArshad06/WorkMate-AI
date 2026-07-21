@@ -3,6 +3,11 @@ from app.services.intent_detector import detect_intent
 from app.intelligence.attendance_ai import attendance_summary
 from app.intelligence.leave_ai import leave_summary
 from app.intelligence.employee_ai import employee_summary
+from app.intelligence.hr_ai import (
+    employee_count,
+    pending_leave_report,
+    missing_attendance_report
+)
 
 
 def ask_ai(employee_id: str, message: str):
@@ -10,59 +15,49 @@ def ask_ai(employee_id: str, message: str):
     intent = detect_intent(message)
 
 
-    # ========================================
-    # Dashboard
-    # ========================================
-
     if intent == "dashboard":
-
-        attendance = attendance_summary(employee_id)
-        leave = leave_summary(employee_id)
-        profile = employee_summary(employee_id)
-
         return (
-            f"{profile}\n\n"
-            f"{attendance}\n\n"
-            f"{leave}"
+            employee_summary(employee_id)
+            + "\n\n"
+            + attendance_summary(employee_id)
+            + "\n\n"
+            + leave_summary(employee_id)
         )
 
 
-    # ========================================
-    # Attendance
-    # ========================================
-
     elif intent == "attendance":
-
         return attendance_summary(employee_id)
 
 
-    # ========================================
-    # Leave
-    # ========================================
-
     elif intent == "leave":
-
         return leave_summary(employee_id)
 
 
-    # ========================================
-    # Profile
-    # ========================================
-
     elif intent == "profile":
-
         return employee_summary(employee_id)
 
 
-    # ========================================
-    # Unknown
-    # ========================================
+    # ============================
+    # HR INTELLIGENCE
+    # ============================
+
+    elif intent == "employee_count":
+        return employee_count()
+
+
+    elif intent == "pending_leaves":
+        return pending_leave_report()
+
+
+    elif intent == "missing_attendance":
+        return missing_attendance_report()
+
 
     return (
-        "🤖 I'm still learning.\n\n"
-        "You can ask me:\n\n"
-        "• Show my dashboard\n"
-        "• Show my attendance\n"
-        "• Show my leave summary\n"
-        "• Show my profile"
+        "🤖 I don't understand that yet.\n\n"
+        "Try asking about:\n"
+        "• Attendance\n"
+        "• Leaves\n"
+        "• Profile\n"
+        "• Employees\n"
     )

@@ -1,5 +1,5 @@
 HR_ADMINS = [
-    "EMP-101",
+    "EMP-101"
 ]
 
 

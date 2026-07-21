@@ -42,3 +42,20 @@ view profile,profile
 profile please,profile
 my information,profile
 employee information,profile
+how many employees are there,employee_count
+show employee count,employee_count
+total employees,employee_count
+how many people work here,employee_count
+employee strength,employee_count
+
+show pending leaves,pending_leaves
+how many pending leaves,pending_leaves
+pending approvals,pending_leaves
+leave requests waiting,pending_leaves
+show pending requests,pending_leaves
+
+who has not checked in today,missing_attendance
+show absent employees,missing_attendance
+who is absent today,missing_attendance
+employees missing attendance,missing_attendance
+who did not check in,missing_attendance

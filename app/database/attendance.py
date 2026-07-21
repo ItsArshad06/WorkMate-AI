@@ -4,6 +4,7 @@ from app.database.db import get_connection
 
 
 def check_in(employee_id):
+
     today = datetime.now().strftime("%Y-%m-%d")
     now = datetime.now().strftime("%H:%M:%S")
 
@@ -12,7 +13,7 @@ def check_in(employee_id):
 
     cursor.execute(
         """
-        SELECT check_out
+        SELECT *
         FROM attendance
         WHERE employee_id = ?
         AND date = ?
@@ -41,7 +42,9 @@ def check_in(employee_id):
     return "SUCCESS"
 
 
+
 def check_out(employee_id):
+
     today = datetime.now().strftime("%Y-%m-%d")
     now = datetime.now().strftime("%H:%M:%S")
 
@@ -68,6 +71,7 @@ def check_out(employee_id):
         conn.close()
         return "ALREADY_CHECKED_OUT"
 
+
     cursor.execute(
         """
         UPDATE attendance
@@ -84,7 +88,9 @@ def check_out(employee_id):
     return "SUCCESS"
 
 
+
 def get_today_attendance():
+
     today = datetime.now().strftime("%Y-%m-%d")
 
     conn = get_connection()
@@ -105,6 +111,9 @@ def get_today_attendance():
     conn.close()
 
     return data
+
+
+
 def get_employee_attendance(employee_id):
 
     conn = get_connection()
@@ -132,6 +141,7 @@ def get_employee_attendance(employee_id):
     return attendance
 
 
+
 def get_today_attendance_count():
 
     today = datetime.now().strftime("%Y-%m-%d")
@@ -145,7 +155,7 @@ def get_today_attendance_count():
         FROM attendance
         WHERE date = ?
         """,
-        (today,)
+        (today,),
     )
 
     count = cursor.fetchone()[0]
