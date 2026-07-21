@@ -16,14 +16,14 @@ def get_connection():
     return conn
 
 
-
 def initialize_database():
 
     conn = get_connection()
     cursor = conn.cursor()
 
-
+    # ==========================================
     # Employees
+    # ==========================================
 
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS employees(
@@ -44,14 +44,28 @@ def initialize_database():
 
         joining_date TEXT NOT NULL,
 
-        status TEXT NOT NULL
+        status TEXT NOT NULL,
+
+        password_hash TEXT
 
     )
     """)
 
+    # Employee table migration
 
+    cursor.execute("PRAGMA table_info(employees)")
+    columns = [column["name"] for column in cursor.fetchall()]
 
+    if "password_hash" not in columns:
+
+        cursor.execute("""
+        ALTER TABLE employees
+        ADD COLUMN password_hash TEXT
+        """)
+
+    # ==========================================
     # Leaves
+    # ==========================================
 
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS leaves(
@@ -71,9 +85,9 @@ def initialize_database():
     )
     """)
 
-
-
+    # ==========================================
     # Attendance
+    # ==========================================
 
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS attendance(
@@ -91,9 +105,9 @@ def initialize_database():
     )
     """)
 
-
-
+    # ==========================================
     # Sessions
+    # ==========================================
 
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS user_sessions(
@@ -115,11 +129,7 @@ def initialize_database():
     )
     """)
 
-
-
     conn.commit()
-
     conn.close()
-
 
     print("✅ Database initialized")
