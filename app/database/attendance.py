@@ -163,3 +163,40 @@ def get_today_attendance_count():
     conn.close()
 
     return count
+from app.database.employee import get_employee_count
+
+
+def get_present_count():
+
+    return get_today_attendance_count()
+
+
+def get_absent_count():
+
+    total = get_employee_count()
+
+    present = get_today_attendance_count()
+
+    return max(total - present, 0)
+def get_all_attendance():
+
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        """
+        SELECT
+            employee_id,
+            date,
+            check_in,
+            check_out
+        FROM attendance
+        ORDER BY date DESC
+        """
+    )
+
+    data = cursor.fetchall()
+
+    conn.close()
+
+    return data

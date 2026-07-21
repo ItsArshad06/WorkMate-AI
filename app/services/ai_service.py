@@ -1,31 +1,30 @@
 from app.services.intent_detector import detect_intent
 
-from app.utils.permissions import has_permission
-
 from app.intelligence.attendance_ai import attendance_summary
 from app.intelligence.leave_ai import leave_summary
 from app.intelligence.employee_ai import employee_summary
+
 from app.intelligence.hr_ai import (
     employee_count,
     pending_leave_report,
     missing_attendance_report,
-    hr_dashboard,
 )
 
+from app.intelligence.insights_ai import (
+    company_insights,
+    executive_brief,
+)
+def ask_ai(employee_id: str, message: str):
 
-def ask_ai(employee_id: str, telegram_user_id: int, message: str):
+    print("MESSAGE:", message)
 
     intent = detect_intent(message)
 
-    # ==========================================
-    # Permission Check
-    # ==========================================
+    print("INTENT:", intent)
 
-    if not has_permission(telegram_user_id, intent):
+def ask_ai(employee_id: str, message: str):
 
-        return (
-            "🔒 This feature is available only to HR users."
-        )
+    intent = detect_intent(message)
 
     # ==========================================
     # Employee Dashboard
@@ -42,7 +41,7 @@ def ask_ai(employee_id: str, telegram_user_id: int, message: str):
         )
 
     # ==========================================
-    # Employee Features
+    # Employee
     # ==========================================
 
     elif intent == "attendance":
@@ -73,19 +72,30 @@ def ask_ai(employee_id: str, telegram_user_id: int, message: str):
 
         return missing_attendance_report()
 
-    elif intent == "hr_dashboard":
+    # ==========================================
+    # AI Insights
+    # ==========================================
 
-        return hr_dashboard()
+    elif intent == "company_insights":
+
+        return company_insights()
+
+    elif intent == "executive_brief":
+
+        return executive_brief()
 
     # ==========================================
-    # Unknown Intent
+    # Unknown
     # ==========================================
 
     return (
         "🤖 I don't understand that yet.\n\n"
         "Try asking about:\n"
         "• Attendance\n"
-        "• Leave\n"
+        "• Leaves\n"
         "• Profile\n"
-        "• Dashboard"
+        "• Dashboard\n"
+        "• Executive Report\n"
+        "• Company Health\n"
+        "• AI Insights\n"
     )

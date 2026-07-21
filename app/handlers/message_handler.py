@@ -24,7 +24,6 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     reply = ask_ai(
         session["employee_id"],
-        telegram_user_id,
         message,
     )
 

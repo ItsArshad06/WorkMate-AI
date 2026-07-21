@@ -65,3 +65,20 @@ company summary,hr_dashboard
 today summary,hr_dashboard
 daily report,hr_dashboard
 organization summary,hr_dashboard
+how is the company today,executive_brief
+company health,executive_brief
+executive report,executive_brief
+executive brief,executive_brief
+daily hr report,executive_brief
+daily report,executive_brief
+morning report,executive_brief
+company performance,executive_brief
+business summary,executive_brief
+today's hr report,executive_brief
+company summary,executive_brief
+give me executive report,executive_brief
+company insights,company_insights
+hr insights,company_insights
+ai insights,company_insights
+show company insights,company_insights
+give me insights,company_insights
