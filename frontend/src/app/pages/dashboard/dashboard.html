@@ -8,14 +8,62 @@
         </div>
 
 
-        <nav>
-            <a class="active">Dashboard</a>
-            <a>Employees</a>
-            <a>Attendance</a>
-            <a>Leaves</a>
-            <a>Analytics</a>
-        </nav>
+       <nav>
 
+    <a
+        routerLink="/dashboard"
+        routerLinkActive="active">
+
+        🏠 Dashboard
+
+    </a>
+
+
+    <a
+        routerLink="/employees"
+        routerLinkActive="active">
+
+        👥 Employees
+
+    </a>
+
+
+    <a
+        routerLink="/attendance"
+        routerLinkActive="active">
+
+        📅 Attendance
+
+    </a>
+
+
+    <a
+        routerLink="/leave"
+        routerLinkActive="active">
+
+        📝 Leaves
+
+    </a>
+
+
+    <a
+        routerLink="/analytics"
+        routerLinkActive="active">
+
+        📊 Analytics
+
+    </a>
+
+
+    <a
+        routerLink="/profile"
+        routerLinkActive="active">
+
+        👤 Profile
+
+    </a>
+
+</nav>
     </aside>
 
 
@@ -153,41 +201,47 @@
         <div class="dashboard-grid">
 
 
-            <div class="activity">
+           <div class="activity">
 
-                <h2>Recent Activity</h2>
+    <h2>📋 Recent Employees</h2>
 
+    @for(emp of employees; track emp.employee_id){
 
-                <div class="activity-item">
+    <div class="activity-item">
 
-                    <div>
-                        <strong>Employee Added</strong>
-                        <p>New employee profile created</p>
-                    </div>
+        <div>
 
-                    <span class="success">
-                        Done
-                    </span>
+            <strong>{{ emp.full_name }}</strong>
 
-                </div>
+            <p>
 
+                {{ emp.employee_id }}
+                •
+                {{ emp.department }}
 
-                <div class="activity-item">
+            </p>
 
-                    <div>
-                        <strong>Leave Request</strong>
-                        <p>Pending HR approval</p>
-                    </div>
+        </div>
 
-                    <span class="pending">
-                        Pending
-                    </span>
+        <span
+            class="success"
+            [class.pending]="emp.status=='Leave'">
 
-                </div>
+            {{ emp.status }}
 
+        </span>
 
-            </div>
+    </div>
 
+    }
+
+    <button class="view-all-btn">
+
+        View All Employees →
+
+    </button>
+
+</div>
 
 
 
@@ -207,28 +261,31 @@
                 </div>
 
 
-                <div class="quick-actions">
+               <div class="quick-actions">
 
-                    <h2>Quick Actions</h2>
+    <div class="quick-actions">
 
-                    <button>
-                        Add Employee
-                    </button>
+    <h2>⚡ Quick Actions</h2>
 
-                    <button>
-                        Review Leaves
-                    </button>
+    <button
+        routerLink="/employees">
 
-                </div>
+        👤 Add Employee
 
+    </button>
 
-            </div>
+    <button
+        routerLink="/leave">
 
+        📝 Review Leaves
 
-        </div>
+    </button>
 
+    <button
+        routerLink="/analytics">
 
-    </main>
+        📊 View Analytics
 
+    </button>
 
 </div>

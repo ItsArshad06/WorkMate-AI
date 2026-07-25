@@ -1,0 +1,168 @@
+<div class="analytics-page">
+
+    <div class="page-header">
+
+        <div>
+
+            <h1>📊 Analytics Dashboard</h1>
+
+            <p>AI-powered workforce insights and HR analytics</p>
+
+        </div>
+
+    </div>
+
+
+    <div class="summary-grid">
+
+        <div class="summary-card">
+
+            <h3>Total Employees</h3>
+
+            <strong>{{ analytics.summary.total_employees }}</strong>
+
+        </div>
+
+        <div class="summary-card">
+
+            <h3>Active Employees</h3>
+
+            <strong>{{ analytics.summary.active_employees }}</strong>
+
+        </div>
+
+        <div class="summary-card">
+
+            <h3>On Leave</h3>
+
+            <strong>{{ analytics.summary.leave_employees }}</strong>
+
+        </div>
+
+        <div class="summary-card">
+
+            <h3>Attendance</h3>
+
+            <strong>{{ analytics.summary.attendance_rate }}</strong>
+
+        </div>
+
+    </div>
+
+
+    <div class="analytics-grid">
+
+        <div class="analytics-card">
+
+            <h2>Employee Growth</h2>
+
+            <ul>
+
+                @for(item of analytics.employee_growth | keyvalue; track item.key){
+
+                    <li>
+
+                        <strong>{{ item.key }}</strong>
+
+                        <span>{{ item.value }}</span>
+
+                    </li>
+
+                }
+
+            </ul>
+
+        </div>
+
+
+        <div class="analytics-card">
+
+            <h2>Department Distribution</h2>
+
+            <ul>
+
+                @for(item of analytics.department_distribution | keyvalue; track item.key){
+
+                    <li>
+
+                        <strong>{{ item.key }}</strong>
+
+                        <span>{{ item.value }}</span>
+
+                    </li>
+
+                }
+
+            </ul>
+
+        </div>
+
+
+        <div class="analytics-card">
+
+            <h2>Attendance Summary</h2>
+
+            <p>
+
+                ✅ Present:
+                {{ analytics.attendance_summary.present_percentage }}%
+
+            </p>
+
+            <p>
+
+                ❌ Absent:
+                {{ analytics.attendance_summary.absent_percentage }}%
+
+            </p>
+
+        </div>
+
+
+        <div class="analytics-card">
+
+            <h2>Leave Summary</h2>
+
+            <p>
+
+                Approved:
+                {{ analytics.leave_summary.approved }}
+
+            </p>
+
+            <p>
+
+                Pending:
+                {{ analytics.leave_summary.pending }}
+
+            </p>
+
+            <p>
+
+                Rejected:
+                {{ analytics.leave_summary.rejected }}
+
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="ai-card">
+
+        <h2>🤖 AI Insights</h2>
+
+        <ul>
+
+            @for(insight of analytics.ai_insights; track insight){
+
+                <li>{{ insight }}</li>
+
+            }
+
+        </ul>
+
+    </div>
+
+</div>

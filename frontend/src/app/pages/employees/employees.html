@@ -1,42 +1,60 @@
-<h1 style="color:red;">THIS IS THE EMPLOYEES COMPONENT</h1>
 <div class="employees-page">
 
     <div class="page-header">
+
         <div>
+
             <h1>👥 Employees</h1>
+
             <p>Manage your workforce records</p>
+
         </div>
+
     </div>
 
     <div class="employee-stats">
 
         <div class="stat-card">
+
             <h3>Total Employees</h3>
+
             <strong>{{ employees.length }}</strong>
+
         </div>
 
         <div class="stat-card">
+
             <h3>Active</h3>
+
             <strong>{{ activeEmployees }}</strong>
+
         </div>
 
         <div class="stat-card">
+
             <h3>On Leave</h3>
+
             <strong>{{ leaveEmployees }}</strong>
+
         </div>
 
         <div class="stat-card">
+
             <h3>Departments</h3>
-            <strong>4</strong>
+
+            <strong>{{ departmentCount }}</strong>
+
         </div>
 
     </div>
 
     <div class="search-box">
+
         <input
             type="text"
             placeholder="🔍 Search employees..."
             [(ngModel)]="searchText">
+
     </div>
 
     <div class="table-card">
@@ -46,6 +64,7 @@
             <thead>
 
                 <tr>
+
                     <th>ID</th>
                     <th>Name</th>
                     <th>Email</th>
@@ -55,6 +74,7 @@
                     <th>Joining Date</th>
                     <th>Status</th>
                     <th>Action</th>
+
                 </tr>
 
             </thead>
@@ -68,11 +88,17 @@
                     <tr>
 
                         <td>{{ emp.employee_id }}</td>
+
                         <td>{{ emp.full_name }}</td>
+
                         <td>{{ emp.email }}</td>
+
                         <td>{{ emp.phone }}</td>
+
                         <td>{{ emp.department }}</td>
+
                         <td>{{ emp.role }}</td>
+
                         <td>{{ emp.joining_date }}</td>
 
                         <td>
@@ -90,13 +116,25 @@
 
                         <td>
 
-                            <button
-                                class="delete-btn"
-                                (click)="deleteEmployee(emp.employee_id)">
+                            <div class="action-buttons">
 
-                                Delete
+                                <button
+                                    class="edit-btn"
+                                    (click)="editEmployee(emp)">
 
-                            </button>
+                                    ✏️ Edit
+
+                                </button>
+
+                                <button
+                                    class="delete-btn"
+                                    (click)="deleteEmployee(emp.employee_id)">
+
+                                    🗑 Delete
+
+                                </button>
+
+                            </div>
 
                         </td>
 
@@ -126,7 +164,7 @@
 
     <div class="form-card">
 
-        <h2>Add Employee</h2>
+        <h2>{{ isEditing ? 'Edit Employee' : 'Add Employee' }}</h2>
 
         <div class="form-grid">
 
@@ -166,17 +204,13 @@
 
         </div>
 
-        <div class="form-buttons">
+        <button
+            class="save-btn"
+            (click)="addEmployee()">
 
-            <button
-                class="save-btn"
-                (click)="addEmployee()">
+            {{ isEditing ? '💾 Update Employee' : '➕ Add Employee' }}
 
-                ➕ Add Employee
-
-            </button>
-
-        </div>
+        </button>
 
     </div>
 
