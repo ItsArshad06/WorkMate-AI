@@ -1,28 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { EmployeeService, Employee } from '../../services/employee.service';
 
-
 @Component({
   selector: 'app-employees',
-  imports: [
-    CommonModule,
-    FormsModule
-  ],
+  standalone: true,
+  imports: [CommonModule, FormsModule],
   templateUrl: './employees.html',
-  styleUrl: './employees.css',
+  styleUrl: './employees.css'
 })
 export class Employees implements OnInit {
-
 
   employees: Employee[] = [];
 
   searchText = '';
 
-  newEmployee: Employee = {
+  isEditing = false;
 
+  newEmployee: Employee = {
     full_name: '',
     employee_id: '',
     email: '',
@@ -31,193 +28,168 @@ export class Employees implements OnInit {
     role: '',
     joining_date: '',
     status: 'Active'
-
   };
 
-
   constructor(
-    private employeeService: EmployeeService
+    private employeeService: EmployeeService,
+    private cdr: ChangeDetectorRef
   ) {}
 
-
   ngOnInit(): void {
-
     this.loadEmployees();
-
   }
+loadEmployees(): void {
 
+  console.log("🚀 loadEmployees() called");
 
-  loadEmployees(){
+  this.employeeService.getEmployees().subscribe({
 
-    this.employeeService
-      .getEmployees()
-      .subscribe({
+    next: (data) => {
 
-        next: (data)=>{
+      console.log("✅ API Response:", data);
 
-          this.employees = data;
+      this.employees = data;
 
-        },
+      this.cdr.detectChanges();
 
-        error:(error)=>{
+    },
 
-          console.error(
-            "Failed to load employees",
-            error
-          );
+    error: (err) => {
 
-        }
-
-      });
-
-  }
-
-
-  addEmployee(){
-
-
-    if(
-      !this.newEmployee.full_name ||
-      !this.newEmployee.employee_id ||
-      !this.newEmployee.email ||
-      !this.newEmployee.phone ||
-      !this.newEmployee.department ||
-      !this.newEmployee.role ||
-      !this.newEmployee.joining_date
-    ){
-
-      alert("Please fill all fields");
-
-      return;
+      console.error("❌ Error:", err);
 
     }
 
+  });
 
-    this.employeeService
-      .addEmployee(this.newEmployee)
-      .subscribe({
+}
+  get filteredEmployees(): Employee[] {
 
-        next:()=>{
-
-
-          alert(
-            "Employee added successfully"
-          );
-
-
-          this.loadEmployees();
-
-
-          this.newEmployee = {
-
-            full_name:'',
-            employee_id:'',
-            email:'',
-            phone:'',
-            department:'',
-            role:'',
-            joining_date:'',
-            status:'Active'
-
-          };
-
-
-        },
-
-
-        error:(error)=>{
-
-          console.error(error);
-
-          alert(
-            "Failed to add employee"
-          );
-
-        }
-
-
-      });
-
-
-  }
-
-
-
-  deleteEmployee(id:string){
-
-
-    const confirmDelete =
-      confirm(
-        "Delete this employee?"
-      );
-
-
-    if(!confirmDelete){
-
-      return;
-
-    }
-
-
-    this.employeeService
-      .deleteEmployee(id)
-      .subscribe({
-
-        next:()=>{
-
-          this.loadEmployees();
-
-        },
-
-        error:(error)=>{
-
-          console.error(error);
-
-        }
-
-      });
-
-
-  }
-
-
-
-  get filteredEmployees(){
-
-    if(!this.searchText.trim()){
-
+    if (!this.searchText.trim()) {
       return this.employees;
-
     }
 
+    const search = this.searchText.toLowerCase();
 
-    const search =
-      this.searchText.toLowerCase();
+    return this.employees.filter(emp =>
 
+      emp.full_name.toLowerCase().includes(search) ||
 
-    return this.employees.filter(
-      employee =>
+      emp.employee_id.toLowerCase().includes(search) ||
 
-        employee.full_name
-        .toLowerCase()
-        .includes(search)
+      emp.department.toLowerCase().includes(search) ||
 
-        ||
-
-        employee.department
-        .toLowerCase()
-        .includes(search)
-
-        ||
-
-        employee.role
-        .toLowerCase()
-        .includes(search)
+      emp.role.toLowerCase().includes(search)
 
     );
 
+  }
+
+  get activeEmployees(): number {
+    return this.employees.filter(e => e.status === 'Active').length;
+  }
+
+  get leaveEmployees(): number {
+    return this.employees.filter(e => e.status === 'Leave').length;
+  }
+
+  get departmentCount(): number {
+
+    return new Set(
+      this.employees.map(emp => emp.department)
+    ).size;
 
   }
 
+  addEmployee(): void {
+
+    if (this.isEditing) {
+
+      this.employeeService.updateEmployee(
+        this.newEmployee.employee_id,
+        this.newEmployee
+      ).subscribe({
+
+        next: () => {
+
+          alert("Employee updated successfully");
+
+          this.resetForm();
+
+          this.loadEmployees();
+
+        },
+
+        error: err => console.error(err)
+
+      });
+
+      return;
+    }
+
+    this.employeeService.addEmployee(this.newEmployee).subscribe({
+
+      next: () => {
+
+        alert("Employee added successfully");
+
+        this.resetForm();
+
+        this.loadEmployees();
+
+      },
+
+      error: err => console.error(err)
+
+    });
+
+  }
+
+  editEmployee(emp: Employee): void {
+
+    this.newEmployee = { ...emp };
+
+    this.isEditing = true;
+
+  }
+
+  deleteEmployee(employeeId: string): void {
+
+    if (!confirm("Delete this employee?")) {
+      return;
+    }
+
+    this.employeeService.deleteEmployee(employeeId).subscribe({
+
+      next: () => {
+
+        alert("Employee deleted successfully");
+
+        this.loadEmployees();
+
+      },
+
+      error: err => console.error(err)
+
+    });
+
+  }
+
+  resetForm(): void {
+
+    this.newEmployee = {
+      full_name: '',
+      employee_id: '',
+      email: '',
+      phone: '',
+      department: '',
+      role: '',
+      joining_date: '',
+      status: 'Active'
+    };
+
+    this.isEditing = false;
+
+  }
 
 }

@@ -1,116 +1,44 @@
 <div class="attendance-page">
 
-    <!-- Header -->
-
     <div class="page-header">
 
         <div>
 
             <h1>📅 Attendance</h1>
 
-            <p>Track employee attendance</p>
+            <p>Monitor employee attendance records</p>
 
         </div>
 
     </div>
 
-
-    <!-- Statistics -->
-
-    <div class="employee-stats">
+    <div class="attendance-stats">
 
         <div class="stat-card">
+            <h3>Total Records</h3>
+            <strong>{{ attendance.length }}</strong>
+        </div>
 
-            <h3>🟢 Present</h3>
-
+        <div class="stat-card">
+            <h3>Present</h3>
             <strong>{{ presentCount }}</strong>
-
         </div>
 
         <div class="stat-card">
-
-            <h3>🔴 Absent</h3>
-
-                <strong>{{ workingCount }}</strong>
+            <h3>Absent</h3>
+            <strong>{{ absentCount }}</strong>
         </div>
 
         <div class="stat-card">
-
-            <h3>🟡 Leave</h3>
-
-            <strong>{{ leaveCount }}</strong>
-
-        </div>
-
-        <div class="stat-card">
-
-            <h3>📈 Attendance</h3>
-
-            <strong>{{ attendanceRate }}%</strong>
-
+            <h3>Attendance Rate</h3>
+            <strong>
+                {{ attendance.length ? ((presentCount * 100) / attendance.length).toFixed(0) : 0 }}%
+            </strong>
         </div>
 
     </div>
-
-
-    <!-- Today's Attendance -->
-
-    <div class="form-card">
-
-        <h2>Today's Attendance</h2>
-
-        <p>
-
-            <strong>Check In:</strong>
-
-            {{ todayCheckIn }}
-
-        </p>
-
-        <p>
-
-            <strong>Check Out:</strong>
-
-            {{ todayCheckOut }}
-
-        </p>
-
-        <p>
-
-            <strong>Working Hours:</strong>
-
-            {{ todayWorkingHours }}
-
-        </p>
-
-        <button
-
-            class="save-btn"
-
-            (click)="checkIn()">
-
-            🟢 Check In
-
-        </button>
-
-        <button
-
-            class="save-btn"
-
-            (click)="checkOut()">
-
-            🔴 Check Out
-
-        </button>
-
-    </div>
-
-
-    <!-- Attendance History -->
 
     <div class="table-card">
-
-        <h2>Attendance History</h2>
 
         <table>
 
@@ -118,15 +46,13 @@
 
                 <tr>
 
+                    <th>ID</th>
+                    <th>Employee</th>
                     <th>Date</th>
-
-                    <th>Check In</th>
-
-                    <th>Check Out</th>
-
-                    <th>Working Hours</th>
-
                     <th>Status</th>
+                    <th>Check In</th>
+                    <th>Check Out</th>
+                    <th>Action</th>
 
                 </tr>
 
@@ -134,45 +60,49 @@
 
             <tbody>
 
-                @for(record of attendanceRecords; track record.date){
+                @for(record of attendance; track record.id){
 
                 <tr>
 
+                    <td>{{ record.id }}</td>
+
+                    <td>{{ record.employee }}</td>
+
                     <td>{{ record.date }}</td>
-
-                    <td>{{ record.checkIn }}</td>
-
-                    <td>{{ record.checkOut }}</td>
-
-                    <td>{{ record.workingHours }}</td>
 
                     <td>
 
-                        @if(record.status === 'Present') {
+                        <span
+                            [class.active]="record.status=='Present'"
+                            [class.leave]="record.status=='Absent'">
 
-                            <span class="active">
+                            {{ record.status }}
 
-                                {{ record.status }}
+                        </span>
 
-                            </span>
+                    </td>
 
-                        } @else if(record.status === 'Working') {
+                    <td>{{ record.check_in || '-' }}</td>
 
-                            <span style="color:#f59e0b;font-weight:600;">
+                    <td>{{ record.check_out || '-' }}</td>
 
-                                {{ record.status }}
+                    <td>
 
-                            </span>
+                        <button
+                            class="edit-btn"
+                            (click)="editRecord(record)">
 
-                        } @else {
+                            Edit
 
-                            <span class="leave">
+                        </button>
 
-                                {{ record.status }}
+                        <button
+                            class="delete-btn"
+                            (click)="deleteRecord(record.id)">
 
-                            </span>
+                            Delete
 
-                        }
+                        </button>
 
                     </td>
 
@@ -183,6 +113,54 @@
             </tbody>
 
         </table>
+
+    </div>
+
+    <div class="form-card">
+
+        <h2>{{ isEditing ? 'Edit Attendance' : 'Add Attendance' }}</h2>
+
+        <div class="form-grid">
+
+            <input
+                type="number"
+                placeholder="ID"
+                [(ngModel)]="newRecord.id"
+                [readonly]="isEditing">
+
+            <input
+                type="text"
+                placeholder="Employee Name"
+                [(ngModel)]="newRecord.employee">
+
+            <input
+                type="date"
+                [(ngModel)]="newRecord.date">
+
+            <input
+                type="text"
+                placeholder="Present / Absent"
+                [(ngModel)]="newRecord.status">
+
+            <input
+                type="text"
+                placeholder="Check In"
+                [(ngModel)]="newRecord.check_in">
+
+            <input
+                type="text"
+                placeholder="Check Out"
+                [(ngModel)]="newRecord.check_out">
+
+        </div>
+
+        <button
+            class="save-btn"
+            (click)="addRecord()">
+
+            {{ isEditing ? 'Update Attendance' : 'Add Attendance' }}
+
+        </button>
 
     </div>
 

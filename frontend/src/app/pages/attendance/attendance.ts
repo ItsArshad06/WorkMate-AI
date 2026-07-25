@@ -1,190 +1,161 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
-interface AttendanceRecord {
-  date: string;
-  checkIn: string;
-  checkOut: string;
-  workingHours: string;
-  status: string;
-}
+import {
+  AttendanceService,
+  Attendance
+} from '../../services/attendance.service';
 
 @Component({
   selector: 'app-attendance',
-  imports: [CommonModule],
+  standalone: true,
+  imports: [CommonModule, FormsModule],
   templateUrl: './attendance.html',
-  styleUrl: './attendance.css',
+  styleUrl: './attendance.css'
 })
-export class Attendance {
+export class AttendancePage implements OnInit {
 
-  checkedIn = false;
-  checkedOut = false;
+  attendance: Attendance[] = [];
 
-  todayCheckIn = '--';
-  todayCheckOut = '--';
-  todayWorkingHours = '--';
+  isEditing = false;
 
-  private checkInDate: Date | null = null;
+  newRecord: Attendance = {
+    id: 0,
+    employee: '',
+    date: '',
+    status: 'Present',
+    check_in: '',
+    check_out: ''
+  };
 
-  attendanceRecords: AttendanceRecord[] = [
+  constructor(
+    private attendanceService: AttendanceService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
-    {
-      date: '19 Jul 2026',
-      checkIn: '09:05 AM',
-      checkOut: '05:58 PM',
-      workingHours: '08h 53m',
-      status: 'Present'
-    },
-
-    {
-      date: '18 Jul 2026',
-      checkIn: '--',
-      checkOut: '--',
-      workingHours: '--',
-      status: 'Leave'
-    }
-
-  ];
-get presentCount(): number {
-
-  return this.attendanceRecords.filter(
-
-    record => record.status === 'Present'
-
-  ).length;
-
-}
-
-get leaveCount(): number {
-
-  return this.attendanceRecords.filter(
-
-    record => record.status === 'Leave'
-
-  ).length;
-
-}
-
-get workingCount(): number {
-
-  return this.attendanceRecords.filter(
-
-    record => record.status === 'Working'
-
-  ).length;
-
-}
-
-get attendanceRate(): number {
-
-  if (this.attendanceRecords.length === 0) {
-
-    return 0;
-
+  ngOnInit(): void {
+    this.loadAttendance();
   }
 
-  return Math.round(
+  loadAttendance(): void {
 
-    (this.presentCount / this.attendanceRecords.length) * 100
+    this.attendanceService.getAttendance().subscribe({
 
-  );
+      next: (data) => {
 
-}
-  checkIn() {
+        // Force Angular to receive a new array reference
+        this.attendance = [...data];
 
-    if (this.checkedIn) {
+        this.cdr.detectChanges();
 
-      alert('Already checked in.');
+      },
 
-      return;
-
-    }
-
-    this.checkedIn = true;
-    this.checkedOut = false;
-
-    this.checkInDate = new Date();
-
-    this.todayCheckIn = this.checkInDate.toLocaleTimeString([], {
-      hour: '2-digit',
-      minute: '2-digit'
-    });
-
-    const today = this.checkInDate.toLocaleDateString('en-GB', {
-      day: '2-digit',
-      month: 'short',
-      year: 'numeric'
-    });
-
-    this.todayCheckOut = '--';
-    this.todayWorkingHours = '--';
-
-    this.attendanceRecords.unshift({
-
-      date: today,
-
-      checkIn: this.todayCheckIn,
-
-      checkOut: '--',
-
-      workingHours: '--',
-
-      status: 'Working'
+      error: (err) => console.error(err)
 
     });
 
   }
 
-  checkOut() {
+  get presentCount(): number {
+    return this.attendance.filter(a => a.status === 'Present').length;
+  }
 
-    if (!this.checkedIn) {
+  get absentCount(): number {
+    return this.attendance.filter(a => a.status === 'Absent').length;
+  }
 
-      alert('Please check in first.');
+  addRecord(): void {
+
+    if (this.isEditing) {
+
+      this.attendanceService.updateRecord(
+        this.newRecord.id,
+        this.newRecord
+      ).subscribe({
+
+        next: () => {
+
+          alert("Attendance updated successfully");
+
+          this.resetForm();
+
+          this.loadAttendance();
+
+        },
+
+        error: err => console.error(err)
+
+      });
 
       return;
 
     }
 
-    if (this.checkedOut) {
+    this.attendanceService.addRecord(this.newRecord).subscribe({
 
-      alert('Already checked out.');
+      next: () => {
 
-      return;
+        alert("Attendance added successfully");
 
-    }
+        this.resetForm();
 
-    if (!this.checkInDate) {
+        this.loadAttendance();
 
-      return;
+      },
 
-    }
+      error: err => console.error(err)
 
-    this.checkedOut = true;
-
-    const checkOutDate = new Date();
-
-    this.todayCheckOut = checkOutDate.toLocaleTimeString([], {
-      hour: '2-digit',
-      minute: '2-digit'
     });
 
-    const difference = checkOutDate.getTime() - this.checkInDate.getTime();
+  }
 
-    const hours = Math.floor(difference / (1000 * 60 * 60));
+  editRecord(record: Attendance): void {
 
-    const minutes = Math.floor(
-      (difference % (1000 * 60 * 60)) / (1000 * 60)
-    );
+    this.newRecord = { ...record };
 
-    this.todayWorkingHours =
-      hours.toString().padStart(2, '0') +
-      'h ' +
-      minutes.toString().padStart(2, '0') +
-      'm';
+    this.isEditing = true;
 
-    this.attendanceRecords[0].checkOut = this.todayCheckOut;
-    this.attendanceRecords[0].workingHours = this.todayWorkingHours;
-    this.attendanceRecords[0].status = 'Present';
+  }
+
+  deleteRecord(id: number): void {
+
+    if (!confirm("Delete this attendance record?")) {
+      return;
+    }
+
+    this.attendanceService.deleteRecord(id).subscribe({
+
+      next: () => {
+
+        alert("Attendance deleted successfully");
+
+        // Remove immediately from UI
+        this.attendance = this.attendance.filter(r => r.id !== id);
+
+        // Refresh from backend
+        this.loadAttendance();
+
+      },
+
+      error: err => console.error(err)
+
+    });
+
+  }
+
+  resetForm(): void {
+
+    this.newRecord = {
+      id: 0,
+      employee: '',
+      date: '',
+      status: 'Present',
+      check_in: '',
+      check_out: ''
+    };
+
+    this.isEditing = false;
 
   }
 

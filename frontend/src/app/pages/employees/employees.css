@@ -425,3 +425,68 @@ grid-template-columns:1fr;
 }
 
 }
+.delete-btn {
+
+    background-color: #dc3545;
+
+    color: #ffffff;
+
+    border: none;
+
+    padding: 8px 16px;
+
+    border-radius: 6px;
+
+    cursor: pointer;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    display: inline-block;
+
+}
+
+.delete-btn:hover {
+
+    background-color: #b02a37;
+
+}
+
+.delete-btn:hover{
+
+    background:#c62828;
+    transform:scale(1.05);
+
+}
+.edit-btn{
+
+    background:#2563eb;
+
+    color:white;
+
+    border:none;
+
+    padding:8px 14px;
+
+    border-radius:6px;
+
+    cursor:pointer;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    margin-right:8px;
+
+    transition:.3s;
+
+}
+
+.edit-btn:hover{
+
+    background:#1d4ed8;
+
+    transform:scale(1.05);
+
+}

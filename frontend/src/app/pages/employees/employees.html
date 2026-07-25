@@ -1,70 +1,43 @@
+<h1 style="color:red;">THIS IS THE EMPLOYEES COMPONENT</h1>
 <div class="employees-page">
 
-    <!-- Header -->
-
     <div class="page-header">
-
         <div>
             <h1>👥 Employees</h1>
             <p>Manage your workforce records</p>
         </div>
-
-        <button class="add-btn">
-            + Add Employee
-        </button>
-
     </div>
-
-
-    <!-- Stats -->
 
     <div class="employee-stats">
 
         <div class="stat-card">
-            <h3>👥 Total Employees</h3>
+            <h3>Total Employees</h3>
             <strong>{{ employees.length }}</strong>
         </div>
 
-
         <div class="stat-card">
-            <h3>🟢 Active</h3>
-            <strong>
-                {{ employees.length }}
-            </strong>
+            <h3>Active</h3>
+            <strong>{{ activeEmployees }}</strong>
         </div>
 
-
         <div class="stat-card">
-            <h3>🟡 On Leave</h3>
-            <strong>
-                {{ employees.filter(e => e.status === 'Leave').length }}
-            </strong>
+            <h3>On Leave</h3>
+            <strong>{{ leaveEmployees }}</strong>
         </div>
 
-
         <div class="stat-card">
-            <h3>🆕 New This Month</h3>
-            <strong>12</strong>
+            <h3>Departments</h3>
+            <strong>4</strong>
         </div>
 
     </div>
-
-
-
-    <!-- Search -->
 
     <div class="search-box">
-
         <input
             type="text"
-            placeholder="Search employees..."
+            placeholder="🔍 Search employees..."
             [(ngModel)]="searchText">
-
     </div>
-
-
-
-    <!-- Employee Table -->
 
     <div class="table-card">
 
@@ -73,7 +46,6 @@
             <thead>
 
                 <tr>
-
                     <th>ID</th>
                     <th>Name</th>
                     <th>Email</th>
@@ -82,178 +54,130 @@
                     <th>Role</th>
                     <th>Joining Date</th>
                     <th>Status</th>
-                    <th>Actions</th>
-
+                    <th>Action</th>
                 </tr>
 
             </thead>
 
-
             <tbody>
 
+                @if(filteredEmployees.length > 0){
 
-                @for (employee of filteredEmployees; track employee.employee_id) {
+                    @for(emp of filteredEmployees; track emp.employee_id){
 
+                    <tr>
 
-                <tr>
+                        <td>{{ emp.employee_id }}</td>
+                        <td>{{ emp.full_name }}</td>
+                        <td>{{ emp.email }}</td>
+                        <td>{{ emp.phone }}</td>
+                        <td>{{ emp.department }}</td>
+                        <td>{{ emp.role }}</td>
+                        <td>{{ emp.joining_date }}</td>
 
+                        <td>
 
-                    <td>
-                        {{ employee.employee_id }}
-                    </td>
+                            <span
+                                class="status-badge"
+                                [class.active]="emp.status === 'Active'"
+                                [class.leave]="emp.status === 'Leave'">
 
+                                {{ emp.status }}
 
-                    <td>
-                        {{ employee.full_name }}
-                    </td>
-
-
-                    <td>
-                        {{ employee.email }}
-                    </td>
-
-
-                    <td>
-                        {{ employee.phone }}
-                    </td>
-
-
-                    <td>
-                        {{ employee.department }}
-                    </td>
-
-
-                    <td>
-                        {{ employee.role }}
-                    </td>
-
-
-                    <td>
-                        {{ employee.joining_date }}
-                    </td>
-
-
-                    <td>
-
-                        @if(employee.status === 'Active') {
-
-                            <span class="active">
-                                {{ employee.status }}
                             </span>
 
-                        }
-                        @else {
+                        </td>
 
-                            <span class="leave">
-                                {{ employee.status }}
-                            </span>
+                        <td>
 
-                        }
+                            <button
+                                class="delete-btn"
+                                (click)="deleteEmployee(emp.employee_id)">
 
-                    </td>
+                                Delete
 
+                            </button>
 
-                    <td>
+                        </td>
 
-                        <button title="View">
-                            👁
-                        </button>
+                    </tr>
 
+                    }
 
-                        <button title="Delete"
-                            (click)="deleteEmployee(employee.employee_id)">
-                            🗑
-                        </button>
+                } @else {
 
-                    </td>
+                    <tr>
 
+                        <td colspan="9" class="empty-table">
 
-                </tr>
+                            No employees found.
 
+                        </td>
+
+                    </tr>
 
                 }
 
-
             </tbody>
-
 
         </table>
 
-
     </div>
-
-
-
-
-    <!-- Add Employee Form -->
-
 
     <div class="form-card">
 
-
-        <h2>
-            Add New Employee
-        </h2>
-
+        <h2>Add Employee</h2>
 
         <div class="form-grid">
-
 
             <input
                 type="text"
                 placeholder="Full Name"
                 [(ngModel)]="newEmployee.full_name">
 
-
             <input
                 type="text"
                 placeholder="Employee ID"
                 [(ngModel)]="newEmployee.employee_id">
-
 
             <input
                 type="email"
                 placeholder="Email"
                 [(ngModel)]="newEmployee.email">
 
-
             <input
-                type="tel"
-                placeholder="Phone Number"
+                type="text"
+                placeholder="Phone"
                 [(ngModel)]="newEmployee.phone">
-
 
             <input
                 type="text"
                 placeholder="Department"
                 [(ngModel)]="newEmployee.department">
 
-
             <input
                 type="text"
                 placeholder="Role"
                 [(ngModel)]="newEmployee.role">
 
-
             <input
                 type="date"
                 [(ngModel)]="newEmployee.joining_date">
 
+        </div>
+
+        <div class="form-buttons">
+
+            <button
+                class="save-btn"
+                (click)="addEmployee()">
+
+                ➕ Add Employee
+
+            </button>
 
         </div>
 
-
-
-        <button
-            class="save-btn"
-            (click)="addEmployee()">
-
-            Save Employee
-
-        </button>
-
-
     </div>
-
 
 </div>

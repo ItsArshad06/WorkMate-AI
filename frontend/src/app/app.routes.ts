@@ -1,13 +1,12 @@
-import { Employees } from './pages/employees/employees';
-
 import { Routes } from '@angular/router';
 
 import { Home } from './pages/home/home';
 import { Login } from './pages/login/login';
 import { Dashboard } from './pages/dashboard/dashboard';
-import { Profile } from './pages/profile/profile';
-import { Attendance } from './pages/attendance/attendance';
+import { Employees } from './pages/employees/employees';
+import { AttendancePage } from './pages/attendance/attendance';
 import { Leave } from './pages/leave/leave';
+import { Profile } from './pages/profile/profile';
 
 export const routes: Routes = [
   {
@@ -23,20 +22,20 @@ export const routes: Routes = [
     component: Dashboard,
   },
   {
-  path: 'employees',
-  component: Employees,
-},
-  {
-    path: 'profile',
-    component: Profile,
+    path: 'employees',
+    component: Employees,
   },
   {
     path: 'attendance',
-    component: Attendance,
+    component: AttendancePage,
   },
   {
     path: 'leave',
     component: Leave,
+  },
+  {
+    path: 'profile',
+    component: Profile,
   },
   {
     path: '**',
