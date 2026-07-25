@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.routes import dashboard, employees, attendance, leaves, analytics
+from app.routes import dashboard, employees, attendance, leaves, analytics, profile
 
 
 app = FastAPI(
@@ -27,7 +27,7 @@ app.include_router(employees.router)
 app.include_router(attendance.router)
 app.include_router(leaves.router)
 app.include_router(analytics.router)
-
+app.include_router(profile.router)
 
 @app.get("/")
 def root():

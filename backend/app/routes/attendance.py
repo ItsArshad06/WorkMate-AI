@@ -1,7 +1,9 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 
-router = APIRouter()
-
+router = APIRouter(
+    prefix="/attendance",
+    tags=["Attendance"]
+)
 
 attendance_records = [
     {
@@ -31,9 +33,75 @@ attendance_records = [
 ]
 
 
-@router.get("/attendance")
+# GET ALL
+@router.get("/")
 def get_attendance():
+    return attendance_records
+
+
+# GET ONE
+@router.get("/{record_id}")
+def get_record(record_id: int):
+
+    for record in attendance_records:
+
+        if record["id"] == record_id:
+            return record
+
+    raise HTTPException(
+        status_code=404,
+        detail="Attendance record not found"
+    )
+
+
+# ADD
+@router.post("/")
+def add_record(record: dict):
+
+    attendance_records.append(record)
 
     return {
-        "attendance": attendance_records
+        "message": "Attendance added successfully",
+        "record": record
     }
+
+
+# UPDATE
+@router.put("/{record_id}")
+def update_record(record_id: int, updated_record: dict):
+
+    for index, record in enumerate(attendance_records):
+
+        if record["id"] == record_id:
+
+            attendance_records[index] = updated_record
+
+            return {
+                "message": "Attendance updated successfully",
+                "record": updated_record
+            }
+
+    raise HTTPException(
+        status_code=404,
+        detail="Attendance record not found"
+    )
+
+
+# DELETE
+@router.delete("/{record_id}")
+def delete_record(record_id: int):
+
+    for record in attendance_records:
+
+        if record["id"] == record_id:
+
+            attendance_records.remove(record)
+
+            return {
+                "message": "Attendance deleted successfully"
+            }
+
+    raise HTTPException(
+        status_code=404,
+        detail="Attendance record not found"
+    )

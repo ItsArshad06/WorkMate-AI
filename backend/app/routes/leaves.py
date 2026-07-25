@@ -1,7 +1,9 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 
-router = APIRouter()
-
+router = APIRouter(
+    prefix="/leaves",
+    tags=["Leaves"]
+)
 
 leave_requests = [
     {
@@ -34,9 +36,74 @@ leave_requests = [
 ]
 
 
-@router.get("/leaves")
+# GET ALL
+@router.get("/")
 def get_leaves():
+    return leave_requests
+
+
+# GET ONE
+@router.get("/{leave_id}")
+def get_leave(leave_id: int):
+
+    for leave in leave_requests:
+        if leave["id"] == leave_id:
+            return leave
+
+    raise HTTPException(
+        status_code=404,
+        detail="Leave request not found"
+    )
+
+
+# ADD
+@router.post("/")
+def add_leave(leave: dict):
+
+    leave_requests.append(leave)
 
     return {
-        "leaves": leave_requests
+        "message": "Leave request added successfully",
+        "leave": leave
     }
+
+
+# UPDATE
+@router.put("/{leave_id}")
+def update_leave(leave_id: int, updated_leave: dict):
+
+    for index, leave in enumerate(leave_requests):
+
+        if leave["id"] == leave_id:
+
+            leave_requests[index] = updated_leave
+
+            return {
+                "message": "Leave updated successfully",
+                "leave": updated_leave
+            }
+
+    raise HTTPException(
+        status_code=404,
+        detail="Leave request not found"
+    )
+
+
+# DELETE
+@router.delete("/{leave_id}")
+def delete_leave(leave_id: int):
+
+    for leave in leave_requests:
+
+        if leave["id"] == leave_id:
+
+            leave_requests.remove(leave)
+
+            return {
+                "message": "Leave deleted successfully"
+            }
+
+    raise HTTPException(
+        status_code=404,
+        detail="Leave request not found"
+    )
