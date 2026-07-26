@@ -1,12 +1,13 @@
 <div class="dashboard">
 
+    <!-- ================= SIDEBAR ================= -->
+
     <aside class="sidebar">
 
         <div class="brand">
-            <h2>WorkMate AI</h2>
-            <p>Enterprise HR Intelligence</p>
+            <h2>🤖 WorkMate AI</h2>
+            <p>Enterprise HR</p>
         </div>
-
 
         <nav>
 
@@ -38,67 +39,49 @@
 
     </aside>
 
-
+    <!-- ================= MAIN ================= -->
 
     <main class="main-content">
 
+        <!-- TOP BAR -->
 
         <div class="topbar">
 
             <div>
 
-                <h1>
-                    Dashboard
-                </h1>
+                <h1>Dashboard</h1>
 
                 <p>
-                    AI powered workforce management
+                    AI Powered Workforce Management
                 </p>
 
             </div>
 
-
-
             <div class="profile">
-
 
                 <div class="notification">
                     🔔
                 </div>
 
-
-
                 <div class="profile-card">
-
 
                     <div class="avatar">
 
-                        {{ user?.username?.charAt(0).toUpperCase() }}
+                        {{ user?.username?.charAt(0)?.toUpperCase() }}
 
                     </div>
-
-
 
                     <div class="profile-details">
 
-
                         <strong>
-
-                            {{ user?.full_name }}
-
+                            {{ user?.username }}
                         </strong>
 
-
                         <span>
-
                             {{ user?.role }}
-
                         </span>
 
-
                     </div>
-
-
 
                     <button
                         class="logout-icon"
@@ -108,21 +91,15 @@
 
                     </button>
 
-
                 </div>
-
 
             </div>
 
-
         </div>
 
-
-
-
+        <!-- SUMMARY -->
 
         <div class="summary-banner">
-
 
             <div>
 
@@ -131,230 +108,203 @@
                 </h2>
 
                 <p>
-                    Your intelligent HR command center
+                    Your Intelligent HR Command Center
                 </p>
 
             </div>
-
-
 
             <div class="summary-items">
 
-
                 <div>
 
-                    <span>
-                        Employees
-                    </span>
+                    <span>Employees</span>
 
                     <strong>
-                        {{dashboardData.total_employees}}
+
+                        {{ dashboardData.total_employees }}
+
                     </strong>
 
                 </div>
 
-
-
                 <div>
 
-                    <span>
-                        Attendance
-                    </span>
+                    <span>Attendance</span>
 
                     <strong>
-                        {{dashboardData.attendance_rate}}
+
+                        {{ dashboardData.attendance_rate }}
+
                     </strong>
 
                 </div>
-
 
             </div>
 
-
         </div>
 
-
-
-
+        <!-- KPI CARDS -->
 
         <div class="cards">
 
-
             <div class="card">
 
-                <h3>
-                    Total Employees
-                </h3>
+                <h3>Total Employees</h3>
 
                 <h2>
-                    {{dashboardData.total_employees}}
+
+                    {{ dashboardData.total_employees }}
+
                 </h2>
 
-                <p>
-                    Active workforce
-                </p>
+                <p>Active Workforce</p>
 
             </div>
 
-
-
-
             <div class="card">
 
-                <h3>
-                    Attendance
-                </h3>
+                <h3>Attendance</h3>
 
                 <h2>
-                    {{dashboardData.attendance_rate}}
+
+                    {{ dashboardData.attendance_rate }}
+
                 </h2>
 
-                <p>
-                    Today's attendance
-                </p>
+                <p>Today's Attendance</p>
 
             </div>
 
-
-
-
             <div class="card">
 
-                <h3>
-                    Pending Leaves
-                </h3>
+                <h3>Pending Leaves</h3>
 
                 <h2>
-                    {{dashboardData.pending_leaves}}
+
+                    {{ dashboardData.pending_leaves }}
+
                 </h2>
 
-                <p>
-                    Awaiting approval
-                </p>
+                <p>Awaiting Approval</p>
 
             </div>
-
-
-
 
             <div class="card ai">
 
-                <h3>
-                    AI Status
-                </h3>
+                <h3>AI Status</h3>
 
                 <h2>
-                    {{dashboardData.ai_status}}
+
+                    {{ dashboardData.ai_status }}
+
                 </h2>
 
-                <p>
-                    System online
-                </p>
+                <p>System Online</p>
 
             </div>
 
-
         </div>
-
-
-
-
+                <!-- ================= DASHBOARD GRID ================= -->
 
         <div class="dashboard-grid">
 
+            <!-- RECENT EMPLOYEES -->
 
             <div class="activity">
 
+                <h2>📋 Recent Employees</h2>
 
-                <h2>
-                    📋 Recent Employees
-                </h2>
-
-
-
-                @for(emp of employees; track emp.employee_id){
+                @for (emp of employees; track emp.employee_id) {
 
                     <div class="activity-item">
-
 
                         <div>
 
                             <strong>
-                                {{emp.full_name}}
-                            </strong>
 
+                                {{ emp.full_name }}
+
+                            </strong>
 
                             <p>
 
-                                {{emp.employee_id}}
+                                {{ emp.employee_id }}
                                 •
-                                {{emp.department}}
+                                {{ emp.department }}
 
                             </p>
 
                         </div>
 
-
-
                         <span class="success">
 
-                            {{emp.status}}
+                            {{ emp.status }}
 
                         </span>
-
 
                     </div>
 
                 }
 
-
-
                 <button
-                    class="view-all-btn">
+                    class="view-all-btn"
+                    routerLink="/employees">
 
                     View All Employees →
 
                 </button>
 
-
             </div>
 
-
-
-
+            <!-- RIGHT COLUMN -->
 
             <div class="right-column">
 
-
+                <!-- AI PANEL -->
 
                 <div class="ai-panel">
 
-                    <h2>
-                        🤖 AI Assistant
-                    </h2>
-
+                    <h2>🤖 AI Assistant</h2>
 
                     <div class="ai-box">
 
-                        Workforce analysis ready.
+                        <p><strong>WorkMate AI</strong></p>
+
+                        <br>
+
+                        <p>
+                            Workforce analysis is ready.
+                        </p>
+
+                        <br>
+
+                        <p>
+
+                            • Attendance is healthy
+
+                        </p>
+
+                        <p>
+
+                            • No critical HR alerts
+
+                        </p>
+
+                        <p>
+
+                            • AI recommendations available
+
+                        </p>
 
                     </div>
 
-
                 </div>
 
-
-
-
+                <!-- QUICK ACTIONS -->
 
                 <div class="quick-actions">
 
-
-                    <h2>
-                        ⚡ Quick Actions
-                    </h2>
-
-
+                    <h2>⚡ Quick Actions</h2>
 
                     <button routerLink="/employees">
 
@@ -362,8 +312,11 @@
 
                     </button>
 
+                    <button routerLink="/attendance">
 
+                        📅 Attendance
 
+                    </button>
 
                     <button routerLink="/leave">
 
@@ -371,18 +324,181 @@
 
                     </button>
 
+                    <button routerLink="/analytics">
+
+                        📊 View Analytics
+
+                    </button>
 
                 </div>
 
+            </div>
+
+        </div>
+                <!-- ================= BOTTOM GRID ================= -->
+
+        <div class="bottom-grid">
+
+            <!-- ATTENDANCE CHART -->
+
+            <div class="chart-card">
+
+                <h2>📈 Weekly Attendance</h2>
+
+                <div class="chart">
+
+                    <div class="bar">
+                        <span style="height:78%"></span>
+                        <p>Mon</p>
+                    </div>
+
+                    <div class="bar">
+                        <span style="height:92%"></span>
+                        <p>Tue</p>
+                    </div>
+
+                    <div class="bar">
+                        <span style="height:84%"></span>
+                        <p>Wed</p>
+                    </div>
+
+                    <div class="bar">
+                        <span style="height:96%"></span>
+                        <p>Thu</p>
+                    </div>
+
+                    <div class="bar">
+                        <span style="height:89%"></span>
+                        <p>Fri</p>
+                    </div>
+
+                </div>
 
             </div>
 
+            <!-- SYSTEM STATUS -->
+
+            <div class="status-card">
+
+                <h2>🟢 System Status</h2>
+
+                <div class="status-item">
+                    <span>Backend API</span>
+                    <strong class="success">Online</strong>
+                </div>
+
+                <div class="status-item">
+                    <span>Database</span>
+                    <strong class="success">Connected</strong>
+                </div>
+
+                <div class="status-item">
+                    <span>Authentication</span>
+                    <strong class="success">Secure</strong>
+                </div>
+
+                <div class="status-item">
+                    <span>AI Engine</span>
+                    <strong class="success">Running</strong>
+                </div>
+
+            </div>
 
         </div>
 
+        <!-- ================= EXTRA GRID ================= -->
 
+        <div class="extra-grid">
+
+            <!-- AI ASSISTANT -->
+
+            <div class="ai-assistant">
+
+                <div class="ai-header">
+
+                    <h2>🤖 AI Insights</h2>
+
+                    <span class="online">
+                        Online
+                    </span>
+
+                </div>
+
+                <div class="ai-message">
+
+                    Good morning,
+                    <strong>{{ user?.username }}</strong>.
+
+                    <br><br>
+
+                    Attendance is stable today.
+
+                    <br>
+
+                    No urgent leave requests require approval.
+
+                    <br>
+
+                    Workforce productivity remains healthy.
+
+                </div>
+
+                <button>
+
+                    Open AI Assistant
+
+                </button>
+
+            </div>
+
+            <!-- NOTIFICATIONS -->
+
+            <div class="notifications">
+
+                <h2>🔔 Notifications</h2>
+
+                <div class="notification-item">
+                    <strong>New Employee Joined</strong>
+                    <p>Engineering Department</p>
+                </div>
+
+                <div class="notification-item">
+                    <strong>2 Leave Requests</strong>
+                    <p>Awaiting approval</p>
+                </div>
+
+                <div class="notification-item">
+                    <strong>Payroll</strong>
+                    <p>Scheduled for tomorrow</p>
+                </div>
+
+            </div>
+
+            <!-- EVENTS -->
+
+            <div class="events">
+
+                <h2>📅 Upcoming Events</h2>
+
+                <div class="event">
+                    <span>28</span>
+                    <p>HR Meeting</p>
+                </div>
+
+                <div class="event">
+                    <span>30</span>
+                    <p>Performance Reviews</p>
+                </div>
+
+                <div class="event">
+                    <span>02</span>
+                    <p>Payroll Processing</p>
+                </div>
+
+            </div>
+
+        </div>
 
     </main>
-
 
 </div>

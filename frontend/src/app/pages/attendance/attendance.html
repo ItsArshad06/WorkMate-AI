@@ -3,14 +3,12 @@
     <div class="page-header">
 
         <div>
-
             <h1>📅 Attendance</h1>
-
             <p>Monitor employee attendance records</p>
-
         </div>
 
     </div>
+
 
     <div class="attendance-stats">
 
@@ -19,15 +17,18 @@
             <strong>{{ attendance.length }}</strong>
         </div>
 
+
         <div class="stat-card">
             <h3>Present</h3>
             <strong>{{ presentCount }}</strong>
         </div>
 
+
         <div class="stat-card">
             <h3>Absent</h3>
             <strong>{{ absentCount }}</strong>
         </div>
+
 
         <div class="stat-card">
             <h3>Attendance Rate</h3>
@@ -38,6 +39,8 @@
 
     </div>
 
+
+
     <div class="table-card">
 
         <table>
@@ -45,7 +48,6 @@
             <thead>
 
                 <tr>
-
                     <th>ID</th>
                     <th>Employee</th>
                     <th>Date</th>
@@ -53,16 +55,14 @@
                     <th>Check In</th>
                     <th>Check Out</th>
                     <th>Action</th>
-
                 </tr>
 
             </thead>
 
+
             <tbody>
 
-                @for(record of attendance; track record.id){
-
-                <tr>
+                <tr *ngFor="let record of attendance">
 
                     <td>{{ record.id }}</td>
 
@@ -70,11 +70,12 @@
 
                     <td>{{ record.date }}</td>
 
+
                     <td>
 
                         <span
-                            [class.active]="record.status=='Present'"
-                            [class.leave]="record.status=='Absent'">
+                            [class.active]="record.status === 'Present'"
+                            [class.leave]="record.status === 'Absent'">
 
                             {{ record.status }}
 
@@ -82,9 +83,16 @@
 
                     </td>
 
-                    <td>{{ record.check_in || '-' }}</td>
 
-                    <td>{{ record.check_out || '-' }}</td>
+                    <td>
+                        {{ record.check_in || '-' }}
+                    </td>
+
+
+                    <td>
+                        {{ record.check_out || '-' }}
+                    </td>
+
 
                     <td>
 
@@ -96,6 +104,7 @@
 
                         </button>
 
+
                         <button
                             class="delete-btn"
                             (click)="deleteRecord(record.id)">
@@ -106,21 +115,42 @@
 
                     </td>
 
+
                 </tr>
 
-                }
+
+                <tr *ngIf="attendance.length === 0">
+
+                    <td colspan="7" style="text-align:center">
+
+                        No attendance records found
+
+                    </td>
+
+                </tr>
+
 
             </tbody>
 
+
         </table>
+
 
     </div>
 
+
+
+
     <div class="form-card">
 
-        <h2>{{ isEditing ? 'Edit Attendance' : 'Add Attendance' }}</h2>
+        <h2>
+            {{ isEditing ? 'Edit Attendance' : 'Add Attendance' }}
+        </h2>
+
+
 
         <div class="form-grid">
+
 
             <input
                 type="number"
@@ -128,31 +158,44 @@
                 [(ngModel)]="newRecord.id"
                 [readonly]="isEditing">
 
+
+
             <input
                 type="text"
                 placeholder="Employee Name"
                 [(ngModel)]="newRecord.employee">
 
+
+
             <input
                 type="date"
                 [(ngModel)]="newRecord.date">
+
+
 
             <input
                 type="text"
                 placeholder="Present / Absent"
                 [(ngModel)]="newRecord.status">
 
+
+
             <input
                 type="text"
                 placeholder="Check In"
                 [(ngModel)]="newRecord.check_in">
+
+
 
             <input
                 type="text"
                 placeholder="Check Out"
                 [(ngModel)]="newRecord.check_out">
 
+
         </div>
+
+
 
         <button
             class="save-btn"
@@ -162,6 +205,8 @@
 
         </button>
 
+
     </div>
+
 
 </div>

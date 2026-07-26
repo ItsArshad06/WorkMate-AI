@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -7,76 +7,138 @@ import {
   Attendance
 } from '../../services/attendance.service';
 
+
 @Component({
   selector: 'app-attendance',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [
+    CommonModule,
+    FormsModule
+  ],
   templateUrl: './attendance.html',
   styleUrl: './attendance.css'
 })
 export class AttendancePage implements OnInit {
 
+
   attendance: Attendance[] = [];
+
 
   isEditing = false;
 
+
   newRecord: Attendance = {
+
     id: 0,
     employee: '',
     date: '',
     status: 'Present',
-    check_in: '',
-    check_out: ''
+    check_in: null,
+    check_out: null
+
   };
 
+
   constructor(
-    private attendanceService: AttendanceService,
-    private cdr: ChangeDetectorRef
+    private attendanceService: AttendanceService
   ) {}
 
+
+
   ngOnInit(): void {
+
     this.loadAttendance();
+
   }
+
+
 
   loadAttendance(): void {
 
-    this.attendanceService.getAttendance().subscribe({
 
-      next: (data) => {
+    console.log("📡 Loading attendance...");
 
-        // Force Angular to receive a new array reference
-        this.attendance = [...data];
 
-        this.cdr.detectChanges();
+    this.attendanceService.getAttendance()
+      .subscribe({
 
-      },
+        next: (data) => {
 
-      error: (err) => console.error(err)
 
-    });
+          console.log(
+            "🔥 Attendance API DATA:",
+            data
+          );
+
+
+          this.attendance = data;
+
+
+          console.log(
+            "✅ Attendance Array:",
+            this.attendance
+          );
+
+
+        },
+
+
+        error: (err) => {
+
+
+          console.error(
+            "❌ Attendance API Error:",
+            err
+          );
+
+
+        }
+
+
+      });
+
 
   }
+
+
 
   get presentCount(): number {
-    return this.attendance.filter(a => a.status === 'Present').length;
+
+    return this.attendance.filter(
+      a => a.status === 'Present'
+    ).length;
+
   }
 
+
+
   get absentCount(): number {
-    return this.attendance.filter(a => a.status === 'Absent').length;
+
+    return this.attendance.filter(
+      a => a.status === 'Absent'
+    ).length;
+
   }
+
+
 
   addRecord(): void {
 
-    if (this.isEditing) {
+
+    if(this.isEditing){
+
 
       this.attendanceService.updateRecord(
         this.newRecord.id,
         this.newRecord
-      ).subscribe({
+      )
+      .subscribe({
 
-        next: () => {
+        next:()=>{
 
-          alert("Attendance updated successfully");
+          alert(
+            "Attendance updated successfully"
+          );
 
           this.resetForm();
 
@@ -84,79 +146,137 @@ export class AttendancePage implements OnInit {
 
         },
 
-        error: err => console.error(err)
+
+        error:(err)=>{
+
+          console.error(err);
+
+        }
+
 
       });
+
 
       return;
 
     }
 
-    this.attendanceService.addRecord(this.newRecord).subscribe({
 
-      next: () => {
 
-        alert("Attendance added successfully");
+    this.attendanceService.addRecord(
+      this.newRecord
+    )
+    .subscribe({
+
+      next:()=>{
+
+
+        alert(
+          "Attendance added successfully"
+        );
+
 
         this.resetForm();
 
         this.loadAttendance();
 
+
       },
 
-      error: err => console.error(err)
+
+      error:(err)=>{
+
+        console.error(err);
+
+      }
+
 
     });
 
+
   }
+
+
+
 
   editRecord(record: Attendance): void {
 
-    this.newRecord = { ...record };
+
+    this.newRecord = {
+      ...record
+    };
+
 
     this.isEditing = true;
 
+
   }
 
-  deleteRecord(id: number): void {
 
-    if (!confirm("Delete this attendance record?")) {
+
+
+
+  deleteRecord(id:number):void{
+
+
+    if(!confirm("Delete this attendance record?")){
+
       return;
+
     }
 
-    this.attendanceService.deleteRecord(id).subscribe({
 
-      next: () => {
+    this.attendanceService.deleteRecord(id)
+    .subscribe({
 
-        alert("Attendance deleted successfully");
+      next:()=>{
 
-        // Remove immediately from UI
-        this.attendance = this.attendance.filter(r => r.id !== id);
 
-        // Refresh from backend
+        alert(
+          "Attendance deleted successfully"
+        );
+
+
         this.loadAttendance();
+
 
       },
 
-      error: err => console.error(err)
+
+      error:(err)=>{
+
+        console.error(err);
+
+      }
+
 
     });
 
+
   }
 
-  resetForm(): void {
+
+
+
+  resetForm():void{
+
 
     this.newRecord = {
-      id: 0,
-      employee: '',
-      date: '',
-      status: 'Present',
-      check_in: '',
-      check_out: ''
+
+      id:0,
+      employee:'',
+      date:'',
+      status:'Present',
+      check_in:null,
+      check_out:null
+
     };
+
 
     this.isEditing = false;
 
+
   }
+
 
 }

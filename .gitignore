@@ -6,3 +6,22 @@ data/workmate.db
 __pycache__/
 *.pyc
 .venv/
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Environment secrets
+.env
+
+# Angular
+node_modules/
+dist/
+
+# Database
+*.db
+*.sqlite3
+
+# OS
+.DS_Store
+Thumbs.db
