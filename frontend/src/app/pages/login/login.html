@@ -70,12 +70,12 @@
 
             <div class="input-group">
 
-                <label>Employee ID</label>
+                <label>Username</label>
 
                 <input
-                    #employeeId
                     type="text"
-                    placeholder="EMP-1024">
+                    placeholder="admin"
+                    [(ngModel)]="username">
 
             </div>
 
@@ -84,9 +84,9 @@
                 <label>Password</label>
 
                 <input
-                    #password
                     type="password"
-                    placeholder="Enter Password">
+                    placeholder="Enter Password"
+                    [(ngModel)]="password">
 
             </div>
 
@@ -109,17 +109,12 @@
             </div>
 
             <button
-                (click)="login(employeeId.value)">
+                (click)="login()"
+                [disabled]="loading">
 
-                Access Workspace →
+                {{ loading ? 'Signing In...' : 'Access Workspace →' }}
 
             </button>
-
-            <div class="message">
-
-                {{message}}
-
-            </div>
 
         </div>
 

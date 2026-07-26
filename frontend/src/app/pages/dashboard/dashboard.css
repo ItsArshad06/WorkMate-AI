@@ -1127,3 +1127,187 @@ flex-wrap:wrap;
     background:#1d4ed8;
 
 }
+/* =========================================
+   WORKMATE AI ENTERPRISE THEME
+========================================= */
+
+:root{
+
+    --primary:#0f6cbd;
+    --primary-dark:#0b5aa0;
+    --primary-light:#eaf4ff;
+
+    --success:#16a34a;
+    --warning:#f59e0b;
+    --danger:#dc2626;
+
+    --background:#f6f9fc;
+    --surface:#ffffff;
+
+    --text:#1f2937;
+    --muted:#6b7280;
+
+    --radius:18px;
+
+    --shadow:
+        0 10px 30px rgba(15,108,189,.08);
+
+}
+/* ==========================================
+   DASHBOARD 2.0 - SPRINT 1
+========================================== */
+
+/* Premium KPI Cards */
+
+.cards{
+    margin-top:30px;
+    gap:28px;
+}
+
+.card{
+    position:relative;
+    overflow:hidden;
+    border-radius:22px;
+    padding:28px;
+    background:#fff;
+    border:1px solid #edf2f7;
+}
+
+.card::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:0;
+    width:100%;
+    height:5px;
+    background:linear-gradient(90deg,#2563eb,#60a5fa);
+}
+
+.card h3{
+    font-size:15px;
+    color:#6b7280;
+    font-weight:600;
+}
+
+.card h2{
+    font-size:42px;
+    margin:16px 0 10px;
+    color:#111827;
+}
+
+.card p{
+    color:#2563eb;
+    font-weight:600;
+}
+
+/* Executive Topbar */
+
+.topbar{
+    background:white;
+    padding:25px 35px;
+    border-radius:22px;
+    box-shadow:0 15px 35px rgba(0,0,0,.06);
+}
+
+.topbar h1{
+    font-size:38px;
+    font-weight:700;
+}
+
+.topbar p{
+    margin-top:8px;
+    color:#64748b;
+}
+
+/* Better Profile */
+
+.notification,
+.avatar{
+
+    transition:.3s;
+
+}
+
+.notification:hover{
+
+    transform:scale(1.12);
+
+}
+
+.avatar:hover{
+
+    transform:rotate(8deg);
+
+}
+.profile-card{
+
+    display:flex;
+    align-items:center;
+    gap:14px;
+
+    background:white;
+
+    padding:8px 14px;
+
+    border-radius:18px;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+
+}
+
+
+.profile-details{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+
+.profile-details strong{
+
+    font-size:14px;
+
+}
+
+
+.profile-details span{
+
+    color:#6b7280;
+
+    font-size:12px;
+
+}
+
+
+.logout-icon{
+
+    border:none;
+
+    background:#fee2e2;
+
+    color:#dc2626;
+
+    width:35px;
+
+    height:35px;
+
+    border-radius:50%;
+
+    cursor:pointer;
+
+    font-size:18px;
+
+    transition:.3s;
+
+}
+
+
+.logout-icon:hover{
+
+    background:#fecaca;
+
+    transform:scale(1.1);
+
+}

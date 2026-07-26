@@ -8,62 +8,34 @@
         </div>
 
 
-       <nav>
+        <nav>
 
-    <a
-        routerLink="/dashboard"
-        routerLinkActive="active">
+            <a routerLink="/dashboard" routerLinkActive="active">
+                🏠 Dashboard
+            </a>
 
-        🏠 Dashboard
+            <a routerLink="/employees" routerLinkActive="active">
+                👥 Employees
+            </a>
 
-    </a>
+            <a routerLink="/attendance" routerLinkActive="active">
+                📅 Attendance
+            </a>
 
+            <a routerLink="/leave" routerLinkActive="active">
+                📝 Leaves
+            </a>
 
-    <a
-        routerLink="/employees"
-        routerLinkActive="active">
+            <a routerLink="/analytics" routerLinkActive="active">
+                📊 Analytics
+            </a>
 
-        👥 Employees
+            <a routerLink="/profile" routerLinkActive="active">
+                👤 Profile
+            </a>
 
-    </a>
+        </nav>
 
-
-    <a
-        routerLink="/attendance"
-        routerLinkActive="active">
-
-        📅 Attendance
-
-    </a>
-
-
-    <a
-        routerLink="/leave"
-        routerLinkActive="active">
-
-        📝 Leaves
-
-    </a>
-
-
-    <a
-        routerLink="/analytics"
-        routerLinkActive="active">
-
-        📊 Analytics
-
-    </a>
-
-
-    <a
-        routerLink="/profile"
-        routerLinkActive="active">
-
-        👤 Profile
-
-    </a>
-
-</nav>
     </aside>
 
 
@@ -74,55 +46,133 @@
         <div class="topbar">
 
             <div>
-                <h1>Dashboard</h1>
-                <p>AI powered workforce management</p>
+
+                <h1>
+                    Dashboard
+                </h1>
+
+                <p>
+                    AI powered workforce management
+                </p>
+
             </div>
 
 
+
             <div class="profile">
+
 
                 <div class="notification">
                     🔔
                 </div>
 
-                <div class="avatar">
-                    A
+
+
+                <div class="profile-card">
+
+
+                    <div class="avatar">
+
+                        {{ user?.username?.charAt(0).toUpperCase() }}
+
+                    </div>
+
+
+
+                    <div class="profile-details">
+
+
+                        <strong>
+
+                            {{ user?.full_name }}
+
+                        </strong>
+
+
+                        <span>
+
+                            {{ user?.role }}
+
+                        </span>
+
+
+                    </div>
+
+
+
+                    <button
+                        class="logout-icon"
+                        (click)="logout()">
+
+                        ⇥
+
+                    </button>
+
+
                 </div>
+
 
             </div>
 
+
         </div>
+
+
 
 
 
         <div class="summary-banner">
 
+
             <div>
-                <h2>Welcome to WorkMate AI</h2>
-                <p>Your intelligent HR command center</p>
+
+                <h2>
+                    Welcome to WorkMate AI
+                </h2>
+
+                <p>
+                    Your intelligent HR command center
+                </p>
+
             </div>
+
 
 
             <div class="summary-items">
 
+
                 <div>
-                    <span>Employees</span>
+
+                    <span>
+                        Employees
+                    </span>
+
                     <strong>
                         {{dashboardData.total_employees}}
                     </strong>
+
                 </div>
+
 
 
                 <div>
-                    <span>Attendance</span>
+
+                    <span>
+                        Attendance
+                    </span>
+
                     <strong>
                         {{dashboardData.attendance_rate}}
                     </strong>
+
                 </div>
+
 
             </div>
 
+
         </div>
+
 
 
 
@@ -132,7 +182,9 @@
 
             <div class="card">
 
-                <h3>Total Employees</h3>
+                <h3>
+                    Total Employees
+                </h3>
 
                 <h2>
                     {{dashboardData.total_employees}}
@@ -146,9 +198,12 @@
 
 
 
+
             <div class="card">
 
-                <h3>Attendance</h3>
+                <h3>
+                    Attendance
+                </h3>
 
                 <h2>
                     {{dashboardData.attendance_rate}}
@@ -162,9 +217,12 @@
 
 
 
+
             <div class="card">
 
-                <h3>Pending Leaves</h3>
+                <h3>
+                    Pending Leaves
+                </h3>
 
                 <h2>
                     {{dashboardData.pending_leaves}}
@@ -178,9 +236,12 @@
 
 
 
+
             <div class="card ai">
 
-                <h3>AI Status</h3>
+                <h3>
+                    AI Status
+                </h3>
 
                 <h2>
                     {{dashboardData.ai_status}}
@@ -198,59 +259,80 @@
 
 
 
+
         <div class="dashboard-grid">
 
 
-           <div class="activity">
+            <div class="activity">
 
-    <h2>📋 Recent Employees</h2>
 
-    @for(emp of employees; track emp.employee_id){
+                <h2>
+                    📋 Recent Employees
+                </h2>
 
-    <div class="activity-item">
 
-        <div>
 
-            <strong>{{ emp.full_name }}</strong>
+                @for(emp of employees; track emp.employee_id){
 
-            <p>
+                    <div class="activity-item">
 
-                {{ emp.employee_id }}
-                •
-                {{ emp.department }}
 
-            </p>
+                        <div>
 
-        </div>
+                            <strong>
+                                {{emp.full_name}}
+                            </strong>
 
-        <span
-            class="success"
-            [class.pending]="emp.status=='Leave'">
 
-            {{ emp.status }}
+                            <p>
 
-        </span>
+                                {{emp.employee_id}}
+                                •
+                                {{emp.department}}
 
-    </div>
+                            </p>
 
-    }
+                        </div>
 
-    <button class="view-all-btn">
 
-        View All Employees →
 
-    </button>
+                        <span class="success">
 
-</div>
+                            {{emp.status}}
+
+                        </span>
+
+
+                    </div>
+
+                }
+
+
+
+                <button
+                    class="view-all-btn">
+
+                    View All Employees →
+
+                </button>
+
+
+            </div>
+
+
 
 
 
             <div class="right-column">
 
 
+
                 <div class="ai-panel">
 
-                    <h2>AI Assistant</h2>
+                    <h2>
+                        🤖 AI Assistant
+                    </h2>
+
 
                     <div class="ai-box">
 
@@ -258,34 +340,49 @@
 
                     </div>
 
+
                 </div>
 
 
-               <div class="quick-actions">
 
-    <div class="quick-actions">
 
-    <h2>⚡ Quick Actions</h2>
 
-    <button
-        routerLink="/employees">
+                <div class="quick-actions">
 
-        👤 Add Employee
 
-    </button>
+                    <h2>
+                        ⚡ Quick Actions
+                    </h2>
 
-    <button
-        routerLink="/leave">
 
-        📝 Review Leaves
 
-    </button>
+                    <button routerLink="/employees">
 
-    <button
-        routerLink="/analytics">
+                        👤 Add Employee
 
-        📊 View Analytics
+                    </button>
 
-    </button>
+
+
+
+                    <button routerLink="/leave">
+
+                        📝 Review Leaves
+
+                    </button>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+    </main>
+
 
 </div>

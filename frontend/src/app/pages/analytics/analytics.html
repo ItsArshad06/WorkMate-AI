@@ -6,12 +6,16 @@
 
             <h1>📊 Analytics Dashboard</h1>
 
-            <p>AI-powered workforce insights and HR analytics</p>
+            <p>
+                AI-powered workforce insights and business intelligence
+            </p>
 
         </div>
 
     </div>
 
+
+    <!-- SUMMARY CARDS -->
 
     <div class="summary-grid">
 
@@ -33,7 +37,7 @@
 
         <div class="summary-card">
 
-            <h3>On Leave</h3>
+            <h3>Employees on Leave</h3>
 
             <strong>{{ analytics.summary.leave_employees }}</strong>
 
@@ -41,7 +45,7 @@
 
         <div class="summary-card">
 
-            <h3>Attendance</h3>
+            <h3>Attendance Rate</h3>
 
             <strong>{{ analytics.summary.attendance_rate }}</strong>
 
@@ -50,118 +54,69 @@
     </div>
 
 
-    <div class="analytics-grid">
+    <!-- CHARTS -->
 
-        <div class="analytics-card">
+    <div class="charts-grid">
 
-            <h2>Employee Growth</h2>
+        <div class="chart-card">
 
-            <ul>
+            <h2>📈 Employee Growth</h2>
 
-                @for(item of analytics.employee_growth | keyvalue; track item.key){
-
-                    <li>
-
-                        <strong>{{ item.key }}</strong>
-
-                        <span>{{ item.value }}</span>
-
-                    </li>
-
-                }
-
-            </ul>
+            <canvas id="growthChart"></canvas>
 
         </div>
 
 
-        <div class="analytics-card">
+        <div class="chart-card">
 
-            <h2>Department Distribution</h2>
+            <h2>🥧 Department Distribution</h2>
 
-            <ul>
-
-                @for(item of analytics.department_distribution | keyvalue; track item.key){
-
-                    <li>
-
-                        <strong>{{ item.key }}</strong>
-
-                        <span>{{ item.value }}</span>
-
-                    </li>
-
-                }
-
-            </ul>
+            <canvas id="departmentChart"></canvas>
 
         </div>
 
 
-        <div class="analytics-card">
+        <div class="chart-card">
 
-            <h2>Attendance Summary</h2>
+            <h2>📅 Attendance Summary</h2>
 
-            <p>
-
-                ✅ Present:
-                {{ analytics.attendance_summary.present_percentage }}%
-
-            </p>
-
-            <p>
-
-                ❌ Absent:
-                {{ analytics.attendance_summary.absent_percentage }}%
-
-            </p>
+            <canvas id="attendanceChart"></canvas>
 
         </div>
 
 
-        <div class="analytics-card">
+        <div class="chart-card">
 
-            <h2>Leave Summary</h2>
+            <h2>📊 Leave Summary</h2>
 
-            <p>
-
-                Approved:
-                {{ analytics.leave_summary.approved }}
-
-            </p>
-
-            <p>
-
-                Pending:
-                {{ analytics.leave_summary.pending }}
-
-            </p>
-
-            <p>
-
-                Rejected:
-                {{ analytics.leave_summary.rejected }}
-
-            </p>
+            <canvas id="leaveChart"></canvas>
 
         </div>
 
     </div>
 
 
+    <!-- AI INSIGHTS -->
+
     <div class="ai-card">
 
-        <h2>🤖 AI Insights</h2>
+        <h2>🤖 AI Workforce Insights</h2>
 
-        <ul>
+        <div class="insights-grid">
 
             @for(insight of analytics.ai_insights; track insight){
 
-                <li>{{ insight }}</li>
+            <div class="insight-box">
+
+                <span>💡</span>
+
+                <p>{{ insight }}</p>
+
+            </div>
 
             }
 
-        </ul>
+        </div>
 
     </div>
 

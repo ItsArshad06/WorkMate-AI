@@ -1,31 +1,83 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
-  imports: [],
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule
+  ],
   templateUrl: './login.html',
-  styleUrl: './login.css',
+  styleUrl: './login.css'
 })
 export class Login {
-  message = '';
 
-  constructor(private http: HttpClient) {}
+  username = '';
+  password = '';
 
-  login(employeeId: string) {
-    console.log('Login clicked:', employeeId);
+  loading = false;
 
-    this.http.post('http://127.0.0.1:8000/login', {
-      employee_id: employeeId,
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) {}
+
+  login(): void {
+
+    if (!this.username || !this.password) {
+
+      alert("Please enter username and password.");
+
+      return;
+
+    }
+
+    this.loading = true;
+
+    this.authService.login({
+
+      username: this.username,
+      password: this.password
+
     }).subscribe({
-      next: (response: any) => {
-        console.log(response);
-        this.message = `Welcome ${response.employee.full_name}`;
+
+      next: (response) => {
+
+        console.log("Login Success:", response);
+
+        localStorage.setItem(
+          "access_token",
+          response.access_token
+        );
+
+        localStorage.setItem(
+          "user",
+          JSON.stringify(response.user)
+        );
+
+        this.loading = false;
+
+        this.router.navigate(['/dashboard']);
+
       },
+
       error: (error) => {
-        console.log(error);
-        this.message = error.error.detail;
-      },
+
+        this.loading = false;
+
+        console.error(error);
+
+        alert("Invalid username or password.");
+
+      }
+
     });
+
   }
+
 }
