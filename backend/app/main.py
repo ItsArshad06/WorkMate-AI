@@ -1,7 +1,23 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.routes import dashboard, employees, attendance, leaves, analytics, profile
+from app.database import Base, engine
+
+from app.routes import (
+    dashboard,
+    employees,
+    attendance,
+    leaves,
+    analytics,
+    profile,
+    auth
+)
+
+from app.routes.attendance import seed_attendance
+
+
+# Create database tables
+Base.metadata.create_all(bind=engine)
 
 
 app = FastAPI(
@@ -11,6 +27,7 @@ app = FastAPI(
 )
 
 
+# CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
@@ -22,12 +39,19 @@ app.add_middleware(
 )
 
 
+# Routers
 app.include_router(dashboard.router)
 app.include_router(employees.router)
 app.include_router(attendance.router)
 app.include_router(leaves.router)
 app.include_router(analytics.router)
 app.include_router(profile.router)
+app.include_router(auth.router)
+
+
+# Seed database data
+seed_attendance()
+
 
 @app.get("/")
 def root():
