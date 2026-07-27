@@ -40,3 +40,13 @@ WorkMate AI is an AI-powered HR workspace designed to simplify employee manageme
 Ask natural language questions:
 
 Examples:
+## 📸 Screenshots
+
+### Dashboard
+![Dashboard](screenshots/dashboard.png)
+
+### AI Chatbot
+![Chatbot](screenshots/chatbot.png)
+
+### Resume Analyzer
+![Resume AI](screenshots/resume-ai.png)
