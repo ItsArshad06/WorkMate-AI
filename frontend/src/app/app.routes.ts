@@ -8,6 +8,7 @@ import { AttendancePage } from './pages/attendance/attendance';
 import { Leave } from './pages/leave/leave';
 import { Profile } from './pages/profile/profile';
 import { AnalyticsPage } from './pages/analytics/analytics';
+import { Resume } from './pages/resume/resume';
 
 import { authGuard } from './guards/auth-guard';
 
@@ -55,13 +56,6 @@ export const routes: Routes = [
 
 
   {
-    path: 'profile',
-    component: Profile,
-    canActivate: [authGuard]
-  },
-
-
-  {
     path: 'analytics',
     component: AnalyticsPage,
     canActivate: [authGuard]
@@ -69,8 +63,22 @@ export const routes: Routes = [
 
 
   {
+    path: 'profile',
+    component: Profile,
+    canActivate: [authGuard]
+  },
+
+
+  {
+    path: 'resume',
+    component: Resume,
+    canActivate: [authGuard]
+  },
+
+
+  {
     path: '**',
-    redirectTo: '',
+    redirectTo: ''
   }
 
 ];

@@ -1,0 +1,172 @@
+<div class="content fade-in">
+
+    <div class="glass-card">
+
+        <h1 class="page-title">
+            📄 AI Resume Analyzer
+        </h1>
+
+        <p class="page-subtitle">
+            Upload candidate resumes and let WorkMate AI evaluate skills, education and experience.
+        </p>
+
+
+        <div class="widget">
+
+
+            <input
+                type="file"
+                accept=".pdf,.docx"
+                (change)="onFileSelected($event)"
+            />
+
+
+            <p *ngIf="selectedFile">
+
+                Selected:
+                <strong>
+                    {{selectedFile.name}}
+                </strong>
+
+            </p>
+
+
+            <button
+                class="tag"
+                (click)="analyzeResume()"
+                [disabled]="loading"
+            >
+
+                <span *ngIf="!loading">
+                    🤖 Analyze Resume
+                </span>
+
+
+                <span *ngIf="loading">
+                    ⏳ Analysing...
+                </span>
+
+
+            </button>
+
+
+        </div>
+
+
+    </div>
+
+
+
+
+    <div
+        class="glass-card"
+        *ngIf="loading"
+    >
+
+        <h2>
+            🧠 WorkMate AI Processing
+        </h2>
+
+        <p class="page-subtitle">
+            Extracting resume information and generating insights...
+        </p>
+
+
+    </div>
+
+
+
+
+
+    <div
+        class="glass-card"
+        *ngIf="analysis && !loading"
+    >
+
+
+        <h2 class="page-title">
+            Candidate Report
+        </h2>
+
+
+        <div class="widgets">
+
+
+            <div class="widget">
+
+                <span class="widget-title">
+                    Score
+                </span>
+
+                <span class="widget-number">
+                    {{analysis.score}}
+                </span>
+
+            </div>
+
+
+
+            <div class="widget">
+
+                <span class="widget-title">
+                    🧠 Skills
+                </span>
+
+                <p *ngFor="let skill of analysis.skills">
+                    {{skill}}
+                </p>
+
+            </div>
+
+
+
+            <div class="widget">
+
+                <span class="widget-title">
+                    🎓 Education
+                </span>
+
+                <p>
+                    {{analysis.education}}
+                </p>
+
+            </div>
+
+
+
+            <div class="widget">
+
+                <span class="widget-title">
+                    💼 Experience
+                </span>
+
+                <p>
+                    {{analysis.experience}}
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+
+        <div class="divider"></div>
+
+
+        <h2>
+            🤖 AI Summary
+        </h2>
+
+
+        <p class="page-subtitle">
+
+            {{analysis.summary}}
+
+        </p>
+
+
+    </div>
+
+
+</div>

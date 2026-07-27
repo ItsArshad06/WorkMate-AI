@@ -6,12 +6,15 @@ import { ApiService } from '../../services/api.service';
 import { EmployeeService, Employee } from '../../services/employee.service';
 import { AuthService } from '../../services/auth.service';
 
+import { Chatbot } from '../../components/chatbot/chatbot';
+
 @Component({
   selector: 'app-dashboard',
   standalone: true,
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    Chatbot
   ],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css'
@@ -36,13 +39,11 @@ export class Dashboard implements OnInit {
 
     this.api.getDashboard().subscribe(data => {
       this.dashboardData = data;
-      console.log('Dashboard Data:', this.dashboardData);
       this.cdr.detectChanges();
     });
 
     this.employeeService.getEmployees().subscribe(data => {
       this.employees = data.slice(0, 3);
-      console.log('Employees Data:', this.employees);
       this.cdr.detectChanges();
     });
 

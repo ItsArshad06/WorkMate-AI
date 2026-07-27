@@ -1,1 +1,104 @@
-<router-outlet></router-outlet>
+<div class="layout">
+
+  <!-- ================= SIDEBAR ================= -->
+
+  <aside class="sidebar">
+
+    <div>
+
+      <div class="logo">
+        <div class="logo-main">🤖 WorkMate AI</div>
+        <div class="logo-ai">Enterprise</div>
+      </div>
+
+      <nav>
+
+        <a routerLink="/dashboard" routerLinkActive="active">
+          📊 Dashboard
+        </a>
+
+        <a routerLink="/employees" routerLinkActive="active">
+          👥 Employees
+        </a>
+
+        <a routerLink="/attendance" routerLinkActive="active">
+          📅 Attendance
+        </a>
+
+        <a routerLink="/leave" routerLinkActive="active">
+          📝 Leave Management
+        </a>
+
+        <a routerLink="/analytics" routerLinkActive="active">
+          📈 Analytics
+        </a>
+
+        <a routerLink="/chatbot" routerLinkActive="active">
+          🤖 AI Assistant
+        </a>
+
+        <a routerLink="/resume" routerLinkActive="active">
+          📄 Resume Analyzer
+        </a>
+
+        <a routerLink="/interview" routerLinkActive="active">
+          🎤 AI Interview
+        </a>
+
+        <a routerLink="/profile" routerLinkActive="active">
+          👤 Profile
+        </a>
+
+      </nav>
+
+    </div>
+
+    <nav>
+
+      <a routerLink="/login">
+        🚪 Exit
+      </a>
+
+    </nav>
+
+  </aside>
+
+  <!-- ================= MAIN ================= -->
+
+  <section class="main">
+
+    <div class="topbar">
+
+      <div>
+
+        <h2>WorkMate AI</h2>
+
+        <span style="color:#64748B;font-weight:600;">
+          Enterprise HR Intelligence Platform
+        </span>
+
+      </div>
+
+      <div class="actions">
+
+        <input
+          placeholder="Search employees..."
+        >
+
+        <button>
+          🔔 Notifications
+        </button>
+
+      </div>
+
+    </div>
+
+    <div class="content fade-in">
+
+      <router-outlet></router-outlet>
+
+    </div>
+
+  </section>
+
+</div>

@@ -1,1 +1,54 @@
-<p>chatbot works!</p>
+<div class="chat-container">
+
+    <div class="chat-header">
+        🤖 WorkMate AI Assistant
+    </div>
+
+    <div class="chat-body">
+
+        <div
+            *ngFor="let msg of messages"
+            class="message"
+            [ngClass]="msg.sender"
+        >
+            {{ msg.text }}
+        </div>
+
+    </div>
+
+    <div class="quick-actions">
+
+        <button (click)="message='dashboard'; sendMessage()">
+            📊 Dashboard
+        </button>
+
+        <button (click)="message='employee count'; sendMessage()">
+            👥 Employees
+        </button>
+
+        <button (click)="message='attendance'; sendMessage()">
+            📅 Attendance
+        </button>
+
+        <button (click)="message='leave'; sendMessage()">
+            📝 Leaves
+        </button>
+
+    </div>
+
+    <div class="chat-input">
+
+        <input
+            type="text"
+            [(ngModel)]="message"
+            placeholder="Ask WorkMate AI..."
+            (keyup.enter)="sendMessage()"
+        />
+
+        <button (click)="sendMessage()">
+            Send
+        </button>
+
+    </div>
+
+</div>
