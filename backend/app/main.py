@@ -12,7 +12,16 @@ from app.routes import (
     profile,
     auth
 )
-
+from app.routes import (
+    dashboard,
+    employees,
+    attendance,
+    leaves,
+    analytics,
+    profile,
+    auth,
+    ai
+)
 from app.routes.attendance import seed_attendance
 
 
@@ -47,7 +56,7 @@ app.include_router(leaves.router)
 app.include_router(analytics.router)
 app.include_router(profile.router)
 app.include_router(auth.router)
-
+app.include_router(ai.router)
 
 # Seed database data
 seed_attendance()
