@@ -9,7 +9,7 @@ import { Leave } from './pages/leave/leave';
 import { Profile } from './pages/profile/profile';
 import { AnalyticsPage } from './pages/analytics/analytics';
 import { Resume } from './pages/resume/resume';
-
+import { Interview } from './pages/interview/interview';
 import { authGuard } from './guards/auth-guard';
 
 
@@ -74,8 +74,12 @@ export const routes: Routes = [
     component: Resume,
     canActivate: [authGuard]
   },
-
-
+  
+  {
+  path: 'interview',
+  component: Interview,
+  canActivate: [authGuard]
+  },
   {
     path: '**',
     redirectTo: ''

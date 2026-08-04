@@ -1,0 +1,171 @@
+<div class="content fade-in">
+
+  <h1 class="page-title">AI Interview Center</h1>
+
+  <p class="page-subtitle">
+    Conduct structured AI interviews and evaluate candidates.
+  </p>
+
+  <div class="glass-card">
+
+    <!-- Candidate Details -->
+
+    <div *ngIf="!interviewStarted">
+
+      <div class="answer-section">
+
+        <label>Candidate Name</label>
+
+        <input
+          type="text"
+          placeholder="Enter candidate name"
+          [(ngModel)]="candidateName">
+
+      </div>
+
+      <br>
+
+      <div class="answer-section">
+
+        <label>Position Applied For</label>
+
+        <input
+          type="text"
+          placeholder="Enter position"
+          [(ngModel)]="position">
+
+      </div>
+
+      <div style="margin-top:30px;">
+
+        <button
+          class="next-btn"
+          (click)="startInterview()">
+
+          Start Interview
+
+        </button>
+
+      </div>
+
+    </div>
+
+    <!-- Interview -->
+
+    <div *ngIf="interviewStarted && !interviewCompleted">
+
+      <div class="candidate-section">
+
+        <div>
+
+          <h2>{{ candidateName }}</h2>
+
+          <p>{{ position }}</p>
+
+        </div>
+
+        <span class="status info">
+          Interview in Progress
+        </span>
+
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="progress-section">
+
+        <div class="progress-header">
+
+          <span>Interview Progress</span>
+
+          <span>{{ progress }}%</span>
+
+        </div>
+
+        <div class="progress">
+
+          <div
+            class="progress-fill"
+            [style.width.%]="progress">
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="question-section">
+
+        <h3>
+          Question {{ currentQuestionIndex + 1 }}
+          of {{ questions.length }}
+        </h3>
+
+        <div class="glass-card">
+
+          <strong>{{ currentQuestion }}</strong>
+
+        </div>
+
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="answer-section">
+
+        <label>Your Answer</label>
+
+        <textarea
+          rows="7"
+          [(ngModel)]="answer"
+          placeholder="Type your answer here...">
+        </textarea>
+
+      </div>
+
+      <div style="margin-top:30px;">
+
+        <button
+          class="next-btn"
+          (click)="nextQuestion()">
+
+          {{
+            currentQuestionIndex === questions.length - 1
+            ? 'Finish Interview'
+            : 'Next Question'
+          }}
+
+        </button>
+
+      </div>
+
+    </div>
+
+    <!-- Completed -->
+
+    <div
+      *ngIf="interviewCompleted"
+      style="text-align:center;padding:40px;">
+
+      <h2>🎉 Interview Completed</h2>
+
+      <p class="page-subtitle">
+
+        Thank you, {{ candidateName }}.
+
+      </p>
+
+      <button
+        class="next-btn"
+        (click)="interviewStarted=false; interviewCompleted=false;">
+
+        New Interview
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
