@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
+import { InterviewService } from '../../services/interview';
+
 @Component({
   selector: 'app-interview',
   standalone: true,
@@ -10,9 +12,13 @@ import { FormsModule } from '@angular/forms';
     FormsModule
   ],
   templateUrl: './interview.html',
-  styleUrl: './interview.css',
+  styleUrl: './interview.css'
 })
 export class Interview {
+
+  constructor(
+    private interviewService: InterviewService
+  ) {}
 
   candidateName = '';
 
@@ -22,22 +28,20 @@ export class Interview {
 
   interviewCompleted = false;
 
+  loading = false;
+
   currentQuestionIndex = 0;
 
   answer = '';
+
+  evaluation: any = null;
 
   answers: {
     question: string;
     answer: string;
   }[] = [];
 
-  questions = [
-    'Tell me about yourself.',
-    'Why do you want to join our company?',
-    'Describe a difficult project you completed.',
-    'What are your strengths and weaknesses?',
-    'Where do you see yourself in five years?'
-  ];
+  questions: string[] = [];
 
   startInterview() {
 
@@ -49,15 +53,43 @@ export class Interview {
 
     }
 
-    this.interviewStarted = true;
+    this.loading = true;
 
-    this.interviewCompleted = false;
+    this.interviewService.startInterview(
 
-    this.currentQuestionIndex = 0;
+      this.candidateName,
 
-    this.answer = '';
+      this.position
 
-    this.answers = [];
+    ).subscribe({
+
+      next: (response: any) => {
+
+        this.questions = response.questions;
+
+        this.interviewStarted = true;
+
+        this.interviewCompleted = false;
+
+        this.currentQuestionIndex = 0;
+
+        this.answer = '';
+
+        this.answers = [];
+
+        this.loading = false;
+
+      },
+
+      error: () => {
+
+        this.loading = false;
+
+        alert('Unable to start interview.');
+
+      }
+
+    });
 
   }
 
@@ -65,7 +97,7 @@ export class Interview {
 
     if (!this.answer.trim()) {
 
-      alert('Please answer the current question before continuing.');
+      alert('Please answer the current question.');
 
       return;
 
@@ -89,11 +121,37 @@ export class Interview {
 
     else {
 
-      this.interviewCompleted = true;
+      this.loading = true;
 
-      console.log('Interview Answers');
+      this.interviewService.evaluateInterview(
 
-      console.table(this.answers);
+        this.candidateName,
+
+        this.position,
+
+        this.answers
+
+      ).subscribe({
+
+        next: (response: any) => {
+
+          this.loading = false;
+
+          this.evaluation = response;
+
+          this.interviewCompleted = true;
+
+        },
+
+        error: () => {
+
+          this.loading = false;
+
+          alert('Evaluation failed.');
+
+        }
+
+      });
 
     }
 
