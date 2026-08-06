@@ -10,24 +10,23 @@ from app.routes import (
     leaves,
     analytics,
     profile,
-    auth
-)
-from app.routes import (
-    dashboard,
-    employees,
-    attendance,
-    leaves,
-    analytics,
-    profile,
     auth,
     ai
 )
+
 from app.routes.attendance import seed_attendance
 
 
-# Create database tables
+# ==========================
+# CREATE DATABASE TABLES
+# ==========================
+
 Base.metadata.create_all(bind=engine)
 
+
+# ==========================
+# FASTAPI APP
+# ==========================
 
 app = FastAPI(
     title="WorkMate AI API",
@@ -36,7 +35,10 @@ app = FastAPI(
 )
 
 
+# ==========================
 # CORS
+# ==========================
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
@@ -48,7 +50,10 @@ app.add_middleware(
 )
 
 
-# Routers
+# ==========================
+# ROUTERS
+# ==========================
+
 app.include_router(dashboard.router)
 app.include_router(employees.router)
 app.include_router(attendance.router)
@@ -58,12 +63,23 @@ app.include_router(profile.router)
 app.include_router(auth.router)
 app.include_router(ai.router)
 
-# Seed database data
+
+# ==========================
+# SEED DATABASE
+# ==========================
+
 seed_attendance()
 
 
+# ==========================
+# ROOT
+# ==========================
+
 @app.get("/")
 def root():
+
     return {
+
         "message": "WorkMate AI Backend is running 🚀"
+
     }
